@@ -1,0 +1,77 @@
+.register-container {
+    width: 680px;
+    margin: 0 auto;
+    padding: 40px 0;
+}
+
+.auth-content {
+    width: 680px;
+    height: 678px;
+    margin: 0 auto;
+}
+
+.register-title {
+    font-size: 32px;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group label {
+    font-weight: bold;
+    margin-bottom: 8px;
+}
+
+.form-group input {
+    height: 40px;
+    padding: 8px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+/* 登録ボタン（赤背景＋白文字） */
+.register-submit {
+    width: 680px;
+    height: 65px;
+    background-color: #FF5555; /* 赤背景 */
+    color: #FFFFFF;            /* 白文字 */
+    border: none;
+    border-radius: 5px;
+    font-family: 'Inter', sans-serif;
+    font-weight: 700;
+    font-size: 26px;
+    text-align: center;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 30px auto;
+}
+
+.login-link {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.login-link-text {
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;     /* Regular */
+    font-size: 20px;
+    line-height: 100%;
+    color: #0073CC;
+    text-decoration: none;
+}
+
+.text-danger {
+    color: red;
+    font-size: 0.9rem;
+    margin-top: 4px;
+}
+
