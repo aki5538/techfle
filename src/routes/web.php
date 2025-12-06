@@ -24,7 +24,7 @@ Route::get('/', function () {
 });
 
 // 商品一覧（トップ画面）
-//Route::get('/', [ItemController::class, 'index'])->name('items.index');
+Route::get('/', [ItemController::class, 'index'])->name('items.index');
 
 // 商品一覧（マイリスト）
 //Route::get('/?tab=mylist', [ItemController::class, 'index'])->name('items.mylist');
@@ -40,7 +40,7 @@ Route::get('/login', [LoginController::class, 'create'])->name('login');
 Route::post('/login', [LoginController::class, 'store'])->name('login.store');
 
 // 商品詳細画面
-//Route::get('/item/{item_id}', [ItemController::class, 'show'])->name('items.show');
+Route::get('/item/{item_id}', [ItemController::class, 'show'])->name('items.show');
 
 // 商品購入画面
 //Route::get('/purchase/{item_id}', [PurchaseController::class, 'create'])->name('purchase.create');
@@ -52,7 +52,7 @@ Route::post('/login', [LoginController::class, 'store'])->name('login.store');
 //Route::get('/sell', [SellController::class, 'create'])->name('sell.create');
 
 // プロフィール画面（トップ／購入一覧／出品一覧）
-//Route::get('/mypage', [ProfileController::class, 'index'])->name('mypage.index');
+Route::get('/mypage', [ProfileController::class, 'index'])->name('mypage.index');
 
 // プロフィール編集画面（設定画面）
 Route::get('/mypage/profile', [ProfileController::class, 'edit'])->name('mypage.profile');

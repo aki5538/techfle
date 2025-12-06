@@ -8,9 +8,16 @@
     @yield('head') <!-- 各画面専用CSSをここに差し込む -->
 </head>
 <body>
-    <header class="auth-header">
-        <img src="{{ asset('images/COACHTECHヘッダーロゴ.png') }}" alt="COACHTECHロゴ">
-    </header>
+    <header class="auth-header d-flex justify-content-between align-items-center">
+    <img src="{{ asset('images/COACHTECHヘッダーロゴ.png') }}" alt="COACHTECHロゴ">
+
+    @auth
+    <form method="POST" action="{{ route('logout') }}">
+        @csrf
+        <button type="submit" class="btn btn-outline-danger">ログアウト</button>
+    </form>
+    @endauth
+</header>
 
     <main class="container">
         @yield('content')

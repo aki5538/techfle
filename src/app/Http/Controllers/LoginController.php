@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-
+use App\Http\Requests\LoginRequest;
 
 class LoginController extends Controller
 {
@@ -15,24 +15,23 @@ class LoginController extends Controller
     }
 
     // ログイン処理 (POST /login)
-    public function store(Request $request)
+    public function store(LoginRequest $request)
     {
-        // バリデーション
-        $credentials = $request->validate([
-            'email' => ['required', 'email'],
-            'password' => ['required'],
-        ]);
+        // バリデーション済みデータを取得
+        $credentials = $request->validated();
 
         // 認証試行
         if (Auth::attempt($credentials)) {
+            // セッション再生成（セキュリティ対策）
             $request->session()->regenerate();
+
             // 成功時はマイページへ
-            return redirect()->route('mypage.index');
+            return redirect()->route('mypage.profile');
         }
 
-        // 失敗時はエラーメッセージ付きで戻す
+        // 失敗時はエラーメッセージを返す
         return back()->withErrors([
-            'email' => 'ログイン情報が正しくありません。',
+            'email' => 'ログイン情報が登録されていません',
         ])->onlyInput('email');
     }
 }
