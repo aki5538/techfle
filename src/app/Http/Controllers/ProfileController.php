@@ -2,52 +2,77 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\ProfileUpdateRequest;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
+use App\Models\Item;
+use App\Models\Purchase;
 
 class ProfileController extends Controller
 {
-    // プロフィール確認画面（PG09〜PG12）
-    public function index()
+    // プロフィール画面表示（PG09〜PG12）
+    public function index(Request $request)
     {
-        $user = Auth::user();
-        $page = request('page'); // buy / sell / null
+        $user = auth()->user();
 
-        // 出品商品一覧・購入商品一覧をリレーションから取得
-        $sellItems = $user->sellItems ?? collect();
-        $buyItems  = $user->buyItems ?? collect();
+        // ログインしていない場合はログイン画面へリダイレクト
+        if (!$user) {
+            return redirect()->route('login')->with('error', 'ログインしてください');
+        }
 
-        return view('mypage.index', compact('user', 'page', 'sellItems', 'buyItems'));
+        $page = $request->query('page');
+
+        if ($page === 'buy') {
+            // 購入した商品一覧（PG11）
+            $buyItems = Purchase::where('user_id', $user->id)
+                ->with('item.images')
+                ->get()
+                ->pluck('item');
+            $sellItems = collect();
+        } elseif ($page === 'sell') {
+            // 出品した商品一覧（PG12）
+            $sellItems = Item::where('user_id', $user->id)
+                ->with('images')
+                ->get();
+            $buyItems = collect();
+        } else {
+            // 通常プロフィール画面（PG09）
+            $buyItems = collect();
+            $sellItems = collect();
+        }
+        
+        return view('mypage.index', compact('user', 'page', 'buyItems', 'sellItems'));
     }
 
-    // プロフィール編集画面（PG10）
+    // プロフィール編集画面表示（PG10）
     public function edit()
     {
-        $user = Auth::user();
+        $user = auth()->user();
         return view('mypage.profile', compact('user'));
     }
 
-    // プロフィール保存処理（POST /mypage/profile）
-    public function store(ProfileUpdateRequest $request)
+    // プロフィール保存処理（PG10）
+    public function store(Request $request)
     {
-        $user = Auth::user();
+        $user = auth()->user();
 
-        // プロフィール画像の保存処理
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'profile_image' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
+            'postal_code' => 'required|string|max:20',
+            'address' => 'required|string|max:255',
+            'building' => 'nullable|string|max:255',
+        ]);
+
         if ($request->hasFile('profile_image')) {
-            $path = $request->file('profile_image')->store('images', 'public');
+            $path = $request->file('profile_image')->store('profile', 'public');
             $user->profile_image = $path;
         }
 
-        // その他の項目更新
-        $user->name        = $request->input('name');
-        $user->postal_code = $request->input('postal_code');
-        $user->address     = $request->input('address');
-        $user->building    = $request->input('building');
-
+        $user->name = $validated['name'];
+        $user->postal_code = $validated['postal_code'];
+        $user->address = $validated['address'];
+        $user->building = $validated['building'] ?? '';
         $user->save();
 
-        // 編集後はプロフィール確認画面（/mypage）へ戻る
-        return redirect()->route('mypage.index')
-                         ->with('success', 'プロフィールを更新しました');
+        return redirect()->route('mypage.index')->with('success', 'プロフィールを更新しました');
     }
 }

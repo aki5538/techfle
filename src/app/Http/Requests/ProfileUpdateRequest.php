@@ -26,12 +26,13 @@ class ProfileUpdateRequest extends FormRequest
     {
         return [
             'profile_image.required' => 'プロフィール画像は必須です',
-            'profile_image.image'    => 'プロフィール画像は画像ファイルを選択してください',
+            'profile_image.mimes'    => 'プロフィール画像はjpegまたはpng形式でアップロードしてください',
             'profile_image.max'      => 'プロフィール画像は2MB以下にしてください',
             'name.required'          => 'ユーザー名を入力してください',
             'postal_code.required'   => '郵便番号を入力してください',
+            'postal_code.size'       => '郵便番号は8文字で入力してください',
+            'postal_code.regex'      => '郵便番号はハイフンありの形式で入力してください',
             'address.required'       => '住所を入力してください',
-            'building.required'      => '建物名を入力してください',
         ];
     }
 }

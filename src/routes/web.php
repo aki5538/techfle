@@ -26,9 +26,6 @@ Route::get('/', function () {
 // 商品一覧（トップ画面）
 Route::get('/', [ItemController::class, 'index'])->name('items.index');
 
-// 商品一覧（マイリスト）
-//Route::get('/?tab=mylist', [ItemController::class, 'index'])->name('items.mylist');
-
 // 会員登録画面
 Route::get('/register', function () {
     return view('auth.register');
@@ -43,13 +40,16 @@ Route::post('/login', [LoginController::class, 'store'])->name('login.store');
 Route::get('/item/{item_id}', [ItemController::class, 'show'])->name('items.show');
 
 // 商品購入画面
-//Route::get('/purchase/{item_id}', [PurchaseController::class, 'create'])->name('purchase.create');
+Route::get('/purchase/{item_id}', [PurchaseController::class, 'create'])->name('purchase.create');
+Route::post('/purchase/{item_id}', [PurchaseController::class, 'store'])->name('purchase.store');
 
 // 送付先住所変更画面
-//Route::get('/purchase/address/{item_id}', [PurchaseController::class, 'editAddress'])->name('purchase.address');
+Route::get('/purchase/address/{item_id}', [PurchaseController::class, 'editAddress'])->name('purchase.address');
+Route::put('/purchase/address/{item_id}', [AddressController::class, 'update'])->name('purchase.address.update');
 
 // 商品出品画面
-//Route::get('/sell', [SellController::class, 'create'])->name('sell.create');
+Route::get('/sell', [SellController::class, 'create'])->name('sell.create');
+Route::post('/sell', [SellController::class, 'store'])->name('sell.store');
 
 // プロフィール画面（トップ／購入一覧／出品一覧）
 Route::get('/mypage', [ProfileController::class, 'index'])->name('mypage.index');

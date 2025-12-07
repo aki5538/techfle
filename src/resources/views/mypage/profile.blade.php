@@ -12,15 +12,17 @@
     <form method="POST" action="{{ route('mypage.profile.store') }}" enctype="multipart/form-data">
         @csrf
 
-        <!-- プロフィール画像 -->
+        {{-- プロフィール画像 --}}
         <div class="form-group">
             <label for="profile_image">プロフィール画像</label>
-            <input id="profile_image" type="file" name="profile_image" accept="image/*" required>
-            @if($user->profile_image)
+            <input id="profile_image" type="file" name="profile_image" accept="image/*">
+            
+            @if(Auth::check() && Auth::user()->profile_image)
                 <div class="mt-2">
-                    <img src="{{ asset('storage/' . $user->profile_image) }}" alt="プロフィール画像" width="120">
+                    <img src="{{ asset('storage/' . Auth::user()->profile_image) }}" alt="プロフィール画像" width="120">
                 </div>
             @endif
+
             @error('profile_image')
                 <div class="text-danger">{{ $message }}</div>
             @enderror
