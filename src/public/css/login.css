@@ -1,0 +1,60 @@
+.auth-content {
+    width: 680px;
+    height: 656px;
+    margin: 200px auto; /* top:200px, center配置 */
+    opacity: 1;
+}
+
+.login-title {
+    font-family: Inter, sans-serif;
+    font-weight: 700;
+    font-size: 36px;
+    line-height: 100%;
+    text-align: center;
+    color: #000000;
+    margin-bottom: 40px;
+}
+
+.form-label {
+    display: block;
+    font-family: Inter, sans-serif;
+    font-weight: 700;
+    font-size: 24px;
+    color: #000000;
+    margin-bottom: 8px;
+}
+
+.form-input {
+    width: 680px;
+    height: 57px;
+    border-radius: 4px;
+    border: 1px solid #5F5F5F;
+    padding: 10px;
+    font-size: 16px;
+    margin-bottom: 24px;
+}
+
+.login-button {
+    width: 680px;
+    height: 65px;
+    border-radius: 5px;
+    background-color: #FF5555;
+    color: #FFFFFF;
+    font-family: Inter, sans-serif;
+    font-weight: 700;
+    font-size: 26px;
+    text-align: center;
+    border: none;
+    cursor: pointer;
+    margin-top: 20px;
+}
+
+.register-link {
+    display: inline-block;
+    font-family: Inter, sans-serif;
+    font-weight: 400;
+    font-size: 20px;
+    color: #0073CC;
+    text-align: center;
+    margin-top: 20px;
+}
