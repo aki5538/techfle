@@ -1,0 +1,296 @@
+.page-header-ui {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 1512px;
+    height: 80px;
+    display: flex;
+    align-items: center;
+}
+
+.page-search {
+    position: absolute;
+    left: 475px;
+    width: 480px;
+    height: 80px;
+    display: flex;
+    align-items: center;
+}
+
+.page-search input {
+    width: 100%;
+    height: 40px;
+    padding-left: 15px;
+    font-size: 18px;
+}
+
+.page-links {
+    position: absolute;
+    left: 1049px;
+    width: 280px; /* ← ここを縮める */
+    height: 80px;
+    display: flex;
+    align-items: center;
+    gap: 20px; /* ← space-between をやめて gap に変更 */
+}
+
+.page-links a {
+    color: #fff;
+    font-size: 18px;
+    text-decoration: none;
+}
+
+.sell-btn {
+    width: 90px;          /* 少し小さく */
+    height: 40px;         /* マイページと揃える */
+    background: #FFFFFF;  /* 白背景 */
+    color: #000000;       /* 黒文字 */
+    font-family: Inter, sans-serif;
+    font-weight: 400;
+    font-size: 18px;      /* マイページと同じ */
+    line-height: 100%;
+    text-align: center;
+    border-radius: 4px;
+    border: 1px solid #000;  /* 黒枠 */
+    cursor: pointer;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.container {
+    width: 1380px;
+    margin: 60px auto 0;
+    display: flex;
+    align-items: flex-start;
+    gap: 40px;
+}
+
+/* 左カラム（画像エリア） */
+.item-detail {
+    width: 690px;
+}
+
+/* 商品画像（600×600） */
+.item-detail-image {
+    width: 600px;
+    height: 600px;
+    border-radius: 4px;
+    object-fit: cover;
+    display: block;
+    margin: 0 auto;
+}
+
+/* 右カラム（商品説明エリア） */
+.item-info {
+    width: 690px;
+}
+
+.item-info-top {
+    width: 570px;
+    height: 273px;
+    margin-left: 65px; /* Figma の left:65px を再現 */
+}
+
+.item-name {
+    width: 570px;
+    height: 77px;
+    font-family: Inter, sans-serif;
+    font-weight: 700;
+    font-size: 45px;
+    line-height: 100%;
+    color: #000;
+    margin: 0;
+}
+
+.brand {
+    width: 570px;
+    height: 28px;
+    font-family: Inter, sans-serif;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 100%;
+    color: #000;
+    margin: 10px 0 0;
+}
+
+.price {
+    width: 570px;
+    height: 45px;
+    font-family: Inter, sans-serif;
+    font-weight: 400;
+    font-size: 30px;
+    line-height: 100%;
+    color: #000;
+    margin: 20px 0 0;
+}
+
+.price span {
+    font-size: 45px; /* 数字だけ大きく */
+}
+
+.likes-comments {
+    display: flex;
+    align-items: center;
+    gap: 20px; /* ハートとふきだしの間 */
+}
+
+.likes, .comments-count {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+}
+
+.likes {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.like-icon-img {
+    width: 30px;
+    height: 30px;
+    object-fit: contain;
+}
+
+.likes span {
+    font-family: Inter, sans-serif;
+    font-weight: 700;
+    font-size: 18px;
+    color: #000;
+}
+
+.comments-count {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.comment-icon-img {
+    width: 28px;
+    height: 28px;
+    object-fit: contain;
+}
+
+.comments-count span {
+    font-family: Inter, sans-serif;
+    font-weight: 700;
+    font-size: 18px;
+    color: #000;
+}
+
+/* 外枠（余白部分含む） */
+.purchase-wrapper {
+    width: 500px;
+    height: 90px;
+    margin: 0;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+/* ボタン本体 */
+.purchase-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 500px;
+    height: 50px;
+    background-color: #FF5555;
+    border-radius: 4px;
+    text-decoration: none;
+
+    /* テキスト */
+    font-family: Inter, sans-serif;
+    font-weight: 700;
+    font-size: 26px;
+    line-height: 100%;
+    color: #FFFFFF;
+}
+
+.description-title {
+    width: 559px;
+    height: 74px;
+    font-family: Inter, sans-serif;
+    font-weight: 700;
+    font-size: 36px;
+    line-height: 100%;
+    color: #000000;
+    margin: 0;
+    margin-top: 40px; /* ボタンとの余白は調整してOK */
+}
+
+.description-body {
+    width: 559px;
+    font-family: Inter, sans-serif;
+    font-weight: 400;
+    font-size: 24px;
+    line-height: 100%;
+    color: #000000;
+    margin-top: 20px;
+}
+
+.item-meta {
+    width: 570px;
+    min-height: 230px; /* Figma の高さに合わせる */
+    margin-top: 40px;  /* 商品説明との余白 */
+    margin-left: 0;
+}
+
+.item-meta-title {
+    width: 559px;
+    height: 100px;
+    font-family: Inter, sans-serif;
+    font-weight: 700;
+    font-size: 36px;
+    line-height: 100%;
+    color: #000000;
+    margin: 0;
+}
+
+.category-wrapper {
+    width: 410px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    margin-top: 10px;
+}
+
+.category-title {
+    font-family: Inter, sans-serif;
+    font-weight: 700;
+    font-size: 24px;
+    color: #000;
+}
+
+.category-tags {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.category-tag {
+    width: 102px;
+    height: 30px;
+    background: #D9D9D9;
+    border-radius: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: Inter, sans-serif;
+    font-weight: 400;
+    font-size: 20px;
+    color: #000;
+}
+
+.item-meta-row {
+    width: 559px;
+    font-family: Inter, sans-serif;
+    font-weight: 400;
+    font-size: 24px;
+    color: #000;
+    margin-top: 20px;
+}

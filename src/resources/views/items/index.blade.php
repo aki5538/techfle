@@ -1,32 +1,52 @@
 @extends('layouts.app')
 
+@section('head')
+    <link rel="stylesheet" href="{{ asset('css/items/index.css') }}">
+@endsection
+
+@section('header-content')
+    <form method="GET" action="{{ url('/') }}" class="search-form me-3">
+        <input type="text" name="keyword" value="{{ $keyword }}" class="search-input" placeholder="なにをお探しですか？">
+    </form>
+
+    @if(Auth::check())
+        {{-- ログイン後：ログインの位置にログアウトを置く --}}
+        <form method="POST" action="{{ route('logout') }}" class="d-inline me-3">
+            @csrf
+            <button type="submit" class="header-link">ログアウト</button>
+        </form>
+    @else
+        {{-- 未ログイン：ログイン --}}
+        <a href="{{ route('login') }}" class="header-link me-3">ログイン</a>
+    @endif
+
+    {{-- この2つはログイン前後で常に表示 --}}
+    <a href="{{ route('mypage.index') }}" class="header-link me-3">マイページ</a>
+    <a href="{{ route('sell.create') }}" class="btn btn-outline-dark">出品</a>
+@endsection
+
 @section('content')
 <div class="container">
-    <h1>商品一覧</h1>
+
+    <div class="tab-menu">
+        <a href="{{ url('/?keyword=' . $keyword) }}" class="tab {{ $tab !== 'mylist' ? 'active' : '' }}">おすすめ</a>
+        <a href="{{ url('/?tab=mylist&keyword=' . $keyword) }}" class="tab {{ $tab === 'mylist' ? 'active' : '' }}">マイリスト</a>
+    </div>
 
     <div class="row">
         @foreach($items as $item)
-            <div class="col-md-3 mb-4">
-                <div class="card">
-                    {{-- 商品画像 --}}
-                    @if($item->images->isNotEmpty())
-                        <img src="{{ asset('storage/' . $item->images->first()->path) }}" 
-                             class="card-img-top" alt="{{ $item->name }}">
+            <div class="col-md-4 mb-4">
+                <div class="item-card">
+
+                    <a href="{{ route('items.show', $item->id) }}">
+                        <img src="{{ $item->img_url }}" class="item-image" alt="{{ $item->name }}">
+                    </a>
+
+                    @if(in_array($item->id, $purchasedItemIds))
+                        <span class="sold-label">Sold</span>
                     @endif
 
-                    <div class="card-body">
-                        <h5 class="card-title">{{ $item->name }}</h5>
-                        <p>¥{{ number_format($item->price) }}</p>
-
-                        {{-- Sold判定 --}}
-                        @if($item->purchases->isNotEmpty())
-                            <span class="badge bg-danger">Sold</span>
-                        @endif
-
-                        {{-- 詳細ページへのリンク --}}
-                        <a href="{{ route('items.show', ['item_id' => $item->id]) }}" 
-                           class="btn btn-primary">詳細を見る</a>
-                    </div>
+                    <p class="item-name">{{ $item->name }}</p>
                 </div>
             </div>
         @endforeach

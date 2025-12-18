@@ -16,5 +16,32 @@ class Item extends Model
         'brand',
         'description',
         'status',
+        'img_url',
     ];
+
+    public function purchase()
+    {
+        return $this->hasOne(Purchase::class, 'item_id');
+    }
+
+    // いいね（FN018）
+    public function likes()
+    {
+        return $this->hasMany(Like::class);
+    }
+
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
+
+    public function categories()
+    {
+        return $this->belongsToMany(Category::class);
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

@@ -49,12 +49,18 @@ class User extends Authenticatable
     // 出品した商品一覧
     public function sellItems()
     {
-        return $this->hasMany(Item::class, 'seller_id');
+        return $this->hasMany(Item::class, 'user_id');
     }
 
     // 購入した商品一覧
     public function buyItems()
     {
         return $this->hasMany(Order::class, 'buyer_id');
+    }
+
+    // いいね（FN018）
+    public function likes()
+    {
+        return $this->hasMany(Like::class);
     }
 }

@@ -1,13 +1,22 @@
 .auth-header {
-    width: 1515px;
-    height: 82px;
+    width: 100%;
+    max-width: 1512px;
+    height: 80px;
     display: flex;
+    justify-content: space-between;
     align-items: center;
-    padding-left: 40px;
+    padding: 0 40px;
     background-color: #000;
     color: #fff;
 }
 .auth-header img {
-    max-height: 82px;
+    max-height: 80px;
     height: auto;
 }
+
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+}
+

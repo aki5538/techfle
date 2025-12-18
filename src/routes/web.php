@@ -7,7 +7,7 @@ use App\Http\Controllers\ItemController;
 use App\Http\Controllers\PurchaseController;
 use App\Http\Controllers\SellController;
 use App\Http\Controllers\ProfileController;
-
+use App\Http\Controllers\AddressController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -19,9 +19,7 @@ use App\Http\Controllers\ProfileController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+
 
 // 商品一覧（トップ画面）
 Route::get('/', [ItemController::class, 'index'])->name('items.index');
@@ -38,6 +36,7 @@ Route::post('/login', [LoginController::class, 'store'])->name('login.store');
 
 // 商品詳細画面
 Route::get('/item/{item_id}', [ItemController::class, 'show'])->name('items.show');
+Route::post('/item/{item_id}', [ItemController::class, 'show']);
 
 // 商品購入画面
 Route::get('/purchase/{item_id}', [PurchaseController::class, 'create'])->name('purchase.create');

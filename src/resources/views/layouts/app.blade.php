@@ -9,15 +9,12 @@
 </head>
 <body>
     <header class="auth-header d-flex justify-content-between align-items-center">
-    <img src="{{ asset('images/COACHTECHヘッダーロゴ.png') }}" alt="COACHTECHロゴ">
+        <img src="{{ asset('images/COACHTECHヘッダーロゴ.png') }}" alt="COACHTECHロゴ">
 
-    @auth
-    <form method="POST" action="{{ route('logout') }}">
-        @csrf
-        <button type="submit" class="btn btn-outline-danger">ログアウト</button>
-    </form>
-    @endauth
-</header>
+        <div class="header-right d-flex align-items-center">
+            @yield('header-content')
+        </div>
+    </header>
 
     <main class="container">
         @yield('content')
