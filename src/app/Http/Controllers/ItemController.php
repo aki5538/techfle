@@ -17,10 +17,10 @@ class ItemController extends Controller
         $keyword = $request->query('keyword');
         $tab = $request->query('tab');
 
-        // ✅ 購入済み商品の ID を取得（Sold 判定用）
+        //購入済み商品の ID を取得（Sold 判定用）
         $purchasedItemIds = Purchase::pluck('item_id')->toArray();
 
-        // ✅ マイリスト（いいねした商品だけ）
+        //マイリスト（いいねした商品だけ）
         if ($tab === 'mylist' && $userId) {
             $items = Item::whereHas('likes', function ($q) use ($userId) {
                     $q->where('user_id', $userId);
@@ -33,14 +33,14 @@ class ItemController extends Controller
             return view('items.index', compact('items', 'purchasedItemIds', 'keyword', 'tab'));
         }
 
-        // ✅ 通常の商品一覧（未ログインでも表示OK）
+        //通常の商品一覧（未ログインでも表示OK）
         $items = Item::query()
             ->when($userId, function ($q) use ($userId) {
-                // ✅ 自分の商品を除外（仕様書 FN014-4）
+                //自分の商品を除外（仕様書 FN014-4）
                 $q->where('user_id', '!=', $userId);
             })
             ->when($keyword, function ($q) use ($keyword) {
-                // ✅ 部分一致検索（仕様書 FN016）
+                //部分一致検索（仕様書 FN016）
                 $q->where('name', 'like', "%{$keyword}%");
             })
             ->get();

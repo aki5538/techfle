@@ -1,0 +1,177 @@
+/* 商品画像 */
+.product-image {
+    width: 180px;
+    height: auto;
+    object-fit: cover;
+    border-radius: 4px;
+    margin-right: 20px;
+}
+
+/* 商品情報ブロック */
+.product-info {
+    width: 326px;
+    margin-left: 50px;
+}
+
+/* 商品名 */
+.product-name {
+    font-family: 'Inter', sans-serif;
+    font-weight: 700;
+    font-size: 30px;
+    line-height: 1;
+    color: #000000;
+    margin-bottom: 10px;
+}
+
+/* 価格 */
+.product-price {
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-size: 27px;
+    line-height: 1;
+    color: #000000;
+}
+
+.product-divider {
+    width: 90%;
+    border-bottom: 1px solid #000000;
+    margin: 20px 0;
+}
+
+.payment-title {
+    font-family: 'Inter', sans-serif;
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 1;
+    color: #000000;
+    margin-top: 20px; /* Figma の top:403px に近づけるための余白 */
+    margin-bottom: 10px;
+}
+
+.payment-select {
+    width: 265px;
+    height: 31px;
+    border: 1px solid #5F5F5F;
+    border-radius: 4px;
+    padding: 4px 8px;
+    font-family: 'Inter', sans-serif;
+    font-weight: 700;
+    font-size: 16px;
+    color: #5F5F5F;
+    background-color: #ffffff;
+    appearance: none; /* デフォルトの▼を消す */
+    background-image: url("data:image/svg+xml;utf8,<svg fill='%235F5F5F' height='14' width='13' viewBox='0 0 20 20' xmlns='http://www.w3.org/2000/svg'><polygon points='0,0 20,0 10,14'/></svg>");
+    background-repeat: no-repeat;
+    background-position: right 8px center; /* ▼の位置 */
+    background-size: 13px 14px;
+    margin-bottom: 20px;
+}
+
+/* 下線（Line 18 / Line 21 共通） */
+.section-divider {
+    width: 90%;
+    border-bottom: 1px solid #000000;
+    margin: 20px 0;
+}
+
+/* 配送先タイトル＋変更する の行 */
+.address-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 90%;
+    margin-left: 10px;   /* 左に寄せる */
+    margin-bottom: 20px;
+}
+
+/* 配送先タイトル */
+.address-title {
+    font-family: 'Inter', sans-serif;
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 1;
+    color: #000000;
+    margin: 0;
+}
+
+/* 変更するリンク */
+.address-edit {
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-size: 20px;
+    color: #0073CC;
+    text-decoration: none;
+    margin-right: 30px;
+}
+
+.address-edit:hover {
+    text-decoration: underline;
+}
+
+/* 住所テキスト */
+.address-text {
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 3;
+    color: #000000;
+    margin-left: 20px;
+    margin-bottom: 70px;
+}
+
+/* 購入サマリーブロック全体 */
+.purchase-summary {
+    width: 440px;
+    height: 230px;
+    border: 1px solid #000000;
+    padding: 0px;
+    box-sizing: border-box;
+}
+
+/* 商品代金・支払い方法の行 */
+.summary-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 115px;
+    border-bottom: 1px solid #000000;
+}
+
+/* 左側ラベル（商品代金・支払い方法） */
+.summary-label {
+    width: 220px;
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-size: 20px;
+    text-align: center;
+    color: #000000;
+}
+
+/* 右側値（¥47,000・コンビニ払いなど） */
+.summary-value {
+    width: 220px;
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-size: 24px;
+    text-align: center;
+    color: #000000;
+}
+
+/* 購入ボタン（Figma 赤ボタン） */
+.purchase-button {
+    width: 100%;
+    margin-top: 70px;
+    background-color: #D60000;
+    color: #ffffff;
+    font-family: 'Inter', sans-serif;
+    font-weight: 700;
+    font-size: 20px;
+    border: none;
+    padding: 10px 0;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.purchase-button:hover {
+    background-color: #b00000;
+}

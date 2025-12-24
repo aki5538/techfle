@@ -36,15 +36,21 @@ Route::post('/login', [LoginController::class, 'store'])->name('login.store');
 
 // 商品詳細画面
 Route::get('/item/{item_id}', [ItemController::class, 'show'])->name('items.show');
-Route::post('/item/{item_id}', [ItemController::class, 'show']);
+Route::post('/item/{item_id}', [ItemController::class, 'show'])->middleware('auth');
 
-// 商品購入画面
-Route::get('/purchase/{item_id}', [PurchaseController::class, 'create'])->name('purchase.create');
-Route::post('/purchase/{item_id}', [PurchaseController::class, 'store'])->name('purchase.store');
-
-// 送付先住所変更画面
-Route::get('/purchase/address/{item_id}', [PurchaseController::class, 'editAddress'])->name('purchase.address');
-Route::put('/purchase/address/{item_id}', [AddressController::class, 'update'])->name('purchase.address.update');
+Route::middleware('auth')->group(function () {
+    // 商品購入画面（PG06）
+    Route::get('/purchase/{item_id}', [PurchaseController::class, 'create'])
+        ->name('purchase.create');
+    // 購入処理
+    Route::post('/purchase/{item_id}', [PurchaseController::class, 'store'])
+        ->name('purchase.store');
+    // 購入前の住所変更（FN024）
+    Route::get('/purchase/address/{item_id}', [PurchaseController::class, 'editAddress'])
+        ->name('purchase.address');
+    Route::put('/purchase/address/{item_id}', [PurchaseController::class, 'updateAddress'])
+        ->name('purchase.address.update');
+});
 
 // 商品出品画面
 Route::get('/sell', [SellController::class, 'create'])->name('sell.create');

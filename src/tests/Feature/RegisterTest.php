@@ -9,8 +9,7 @@ class RegisterTest extends TestCase
 {
     use RefreshDatabase;
 
-    /** @test */
-    public function 名前が未入力の場合バリデーションエラーになる()
+    public function test_名前が未入力の場合バリデーションエラーになる()
     {
         $response = $this->post('/register', [
             'name' => '',

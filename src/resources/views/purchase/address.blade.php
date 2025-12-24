@@ -1,34 +1,39 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
-    <h1>送付先住所変更</h1>
+<div class="container py-4">
 
-    <h3>{{ $item->name }}</h3>
+    <h2 class="mb-4">送付先住所の変更</h2>
 
-    <form method="POST" action="{{ route('purchase.address.update', ['item_id' => $item->id]) }}">
-        @csrf
-        @method('PUT')
+    <div class="card p-4 shadow-sm">
 
-        <div class="mb-3">
-            <label for="postal_code" class="form-label">郵便番号</label>
-            <input type="text" name="postal_code" id="postal_code" class="form-control" 
-                   value="{{ old('postal_code', $user->postal_code ?? '') }}" required>
-        </div>
+        <form method="POST" action="{{ route('purchase.address.update', ['item_id' => $item->id]) }}">
+            @csrf
 
-        <div class="mb-3">
-            <label for="address" class="form-label">住所</label>
-            <input type="text" name="address" id="address" class="form-control" 
-                   value="{{ old('address', $user->address ?? '') }}" required>
-        </div>
+            {{-- 現在の住所 --}}
+            <div class="mb-3">
+                <label class="form-label fw-bold">現在の住所</label>
+                <p class="form-control-plaintext">{{ $user->address }}</p>
+            </div>
 
-        <div class="mb-3">
-            <label for="building" class="form-label">建物名</label>
-            <input type="text" name="building" id="building" class="form-control" 
-                   value="{{ old('building', $user->building ?? '') }}">
-        </div>
+            {{-- 新しい住所入力 --}}
+            <div class="mb-3">
+                <label for="address" class="form-label fw-bold">新しい住所</label>
+                <input type="text"
+                       name="address"
+                       id="address"
+                       class="form-control"
+                       value="{{ old('address', $user->address) }}"
+                       required>
+            </div>
 
-        <button type="submit" class="btn btn-primary">変更する</button>
-    </form>
+            <button type="submit" class="btn btn-primary w-100">
+                住所を更新する
+            </button>
+
+        </form>
+
+    </div>
+
 </div>
 @endsection
