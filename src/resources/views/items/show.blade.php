@@ -13,7 +13,7 @@
     </div>
 
     <div class="page-links">
-        <a href="/login">ログイン</a>
+        <a href="/login">ログアウト</a>
         <a href="/mypage">マイページ</a>
         <form action="/sell" method="GET">
             <button type="submit" class="sell-btn">出品</button>

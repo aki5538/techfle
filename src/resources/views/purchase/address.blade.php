@@ -1,39 +1,67 @@
 @extends('layouts.app')
 
+@section('head')
+<link rel="stylesheet" href="{{ asset('css/purchase/address.css') }}">
+@endsection
+
 @section('content')
-<div class="container py-4">
 
-    <h2 class="mb-4">送付先住所の変更</h2>
-
-    <div class="card p-4 shadow-sm">
-
-        <form method="POST" action="{{ route('purchase.address.update', ['item_id' => $item->id]) }}">
-            @csrf
-
-            {{-- 現在の住所 --}}
-            <div class="mb-3">
-                <label class="form-label fw-bold">現在の住所</label>
-                <p class="form-control-plaintext">{{ $user->address }}</p>
-            </div>
-
-            {{-- 新しい住所入力 --}}
-            <div class="mb-3">
-                <label for="address" class="form-label fw-bold">新しい住所</label>
-                <input type="text"
-                       name="address"
-                       id="address"
-                       class="form-control"
-                       value="{{ old('address', $user->address) }}"
-                       required>
-            </div>
-
-            <button type="submit" class="btn btn-primary w-100">
-                住所を更新する
-            </button>
-
-        </form>
-
+{{-- ヘッダーUI（商品詳細画面と同じ構造） --}}
+<div class="page-header-ui">
+    <div class="page-search">
+        <input type="text" placeholder="なにをお探しですか？">
     </div>
 
+    <div class="page-links">
+        <a href="/login">ログアウト</a>
+        <a href="/mypage">マイページ</a>
+        <form action="/sell" method="GET">
+            <button type="submit" class="sell-btn">出品</button>
+        </form>
+    </div>
 </div>
+
+<div class="address-container">
+
+    {{-- タイトル --}}
+    <h2 class="address-title">住所の変更</h2>
+
+    <form method="POST" action="{{ route('purchase.address.update', ['item_id' => $item->id]) }}" class="address-form">
+        @csrf
+        @method('PUT')
+
+        {{-- 郵便番号 --}}
+        <div class="form-block">
+            <label class="form-label">郵便番号</label>
+            <input type="text" name="postal_code" class="form-input"
+                   value="{{ old('postal_code', $currentAddress->postal_code ?? '') }}" required>
+        </div>
+
+        {{-- 住所 --}}
+        <div class="form-block">
+            <label class="form-label">住所</label>
+            <input type="text" name="address" class="form-input"
+                value="{{ old('address',
+                    ($currentAddress->prefecture ?? '') .
+                    ($currentAddress->city ?? '') .
+                    ($currentAddress->block ?? '')
+                ) }}"
+                required>
+        </div>
+
+        {{-- 建物名 --}}
+        <div class="form-block">
+            <label class="form-label">建物名</label>
+            <input type="text" name="building" class="form-input"
+                   value="{{ old('building', $currentAddress->building ?? '') }}">
+        </div>
+
+        {{-- 更新ボタン --}}
+        <button type="submit" class="update-btn">
+            <span class="update-btn-text">更新する</span>
+        </button>
+
+    </form>
+</div>
+
 @endsection
