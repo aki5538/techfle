@@ -1,62 +1,80 @@
 @extends('layouts.app')
 
-@section('content')
-<div class="container">
-    <h1>プロフィール</h1>
+@section('head')
+<link rel="stylesheet" href="{{ asset('css/mypage/index.css') }}">
+@endsection
 
-    <!-- プロフィール画像 -->
-    @if($user->profile_image)
-        <div class="mb-3">
-            <img src="{{ asset('storage/' . $user->profile_image) }}" alt="プロフィール画像" width="120">
-        </div>
+@section('header-content')
+    <form method="GET" action="{{ url('/') }}" class="search-form me-3">
+        <input type="text" name="keyword" class="search-input" placeholder="なにをお探しですか？">
+    </form>
+
+    @if(Auth::check())
+        <form method="POST" action="{{ route('logout') }}" class="d-inline me-3">
+            @csrf
+            <button type="submit" class="header-link">ログアウト</button>
+        </form>
+    @else
+        <a href="{{ route('login') }}" class="header-link me-3">ログイン</a>
     @endif
 
-    <!-- ユーザー名 -->
-    <p><strong>ユーザー名:</strong> {{ $user->name }}</p>
+    <a href="{{ route('mypage.index') }}" class="header-link me-3">マイページ</a>
+    <a href="{{ route('sell.create') }}" class="btn btn-outline-dark">出品</a>
+@endsection
 
-    <!-- タブ切り替え -->
-    <ul class="nav nav-tabs mt-3">
-        <li class="nav-item">
-            <a class="nav-link {{ $page === null ? 'active' : '' }}" href="{{ route('mypage.index') }}">プロフィール</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link {{ $page === 'buy' ? 'active' : '' }}" href="{{ route('mypage.index', ['page' => 'buy']) }}">購入商品一覧</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link {{ $page === 'sell' ? 'active' : '' }}" href="{{ route('mypage.index', ['page' => 'sell']) }}">出品商品一覧</a>
-        </li>
-    </ul>
+@section('content')
+<div class="container">
 
-    <!-- コンテンツ切り替え -->
-    <div class="mt-3">
-        @if($page === 'buy')
-            <h2>購入した商品一覧</h2>
-            <ul>
-                @forelse($buyItems as $item)
-                    <li>{{ $item->name }}</li>
-                @empty
-                    <li>購入商品はありません</li>
-                @endforelse
-            </ul>
-        @elseif($page === 'sell')
-            <h2>出品した商品一覧</h2>
-            <ul>
-                @forelse($sellItems as $item)
-                    <li>{{ $item->name }}</li>
-                @empty
-                    <li>出品商品はありません</li>
-                @endforelse
-            </ul>
-        @else
-            <h2>プロフィール情報</h2>
-            <p>ユーザー名: {{ $user->name }}</p>
-            <!-- プロフィール画像は上で表示済み -->
-        @endif
+    {{-- プロフィールヘッダー --}}
+    <div class="mypage-header">
+        <div class="profile-image-wrapper">
+            @if ($user->profile_image)
+                <img src="{{ asset('storage/' . $user->profile_image) }}" alt="プロフィール画像" class="profile-image">
+            @else
+                <div class="profile-image-placeholder">No Image</div>
+            @endif
+        </div>
+
+        <div class="profile-info-row">
+            <p class="profile-username">{{ $user->name }}</p>
+
+            <a href="{{ route('mypage.profile') }}" class="btn-profile-edit">
+                プロフィールを編集
+            </a>
+        </div>
     </div>
 
-    <!-- 編集画面へのリンク -->
-    <div class="mt-3">
-        <a href="{{ route('mypage.profile') }}" class="btn btn-secondary">プロフィールを編集する</a>
+    {{-- タブ --}}
+    <div class="mypage-tabs">
+        <a href="{{ route('mypage.index', ['page' => 'sell']) }}"
+           class="mypage-tab {{ $page === 'sell' ? 'is-active' : '' }}">
+            出品した商品
+        </a>
+
+        <a href="{{ route('mypage.index', ['page' => 'buy']) }}"
+           class="mypage-tab {{ $page === 'buy' ? 'is-active' : '' }}">
+            購入した商品
+        </a>
+    </div>
+
+    {{-- 商品一覧 --}}
+    <div class="mypage-items">
+        @forelse ($items as $item)
+            <a href="{{ url('/item/' . $item->id) }}" class="mypage-item-card">
+                <div class="item-image-wrapper">
+                    @if ($item->images->first())
+                        <img src="{{ asset('storage/' . $item->images->first()->path) }}" class="item-image">
+                    @else
+                        <div class="item-image-placeholder">No Image</div>
+                    @endif
+                </div>
+                <p class="item-name">{{ $item->name }}</p>
+            </a>
+        @empty
+            <p class="mypage-empty">
+                {{ $page === 'sell' ? '出品した商品はありません。' : '購入した商品はありません。' }}
+            </p>
+        @endforelse
     </div>
 </div>
 @endsection

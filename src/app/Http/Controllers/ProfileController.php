@@ -8,41 +8,37 @@ use App\Models\Purchase;
 
 class ProfileController extends Controller
 {
-    // プロフィール画面表示（PG09〜PG12）
+    // プロフィール画面（PG09〜PG12）
     public function index(Request $request)
     {
         $user = auth()->user();
 
-        // ログインしていない場合はログイン画面へリダイレクト
         if (!$user) {
             return redirect()->route('login')->with('error', 'ログインしてください');
         }
 
-        $page = $request->query('page');
+        // デフォルトは「出品した商品一覧」
+        $page = $request->query('page', 'sell');
 
         if ($page === 'buy') {
             // 購入した商品一覧（PG11）
-            $buyItems = Purchase::where('user_id', $user->id)
+            $items = Purchase::where('user_id', $user->id)
                 ->with('item.images')
                 ->get()
                 ->pluck('item');
-            $sellItems = collect();
-        } elseif ($page === 'sell') {
+        } else {
             // 出品した商品一覧（PG12）
-            $sellItems = Item::where('user_id', $user->id)
+            $items = Item::where('user_id', $user->id)
                 ->with('images')
                 ->get();
-            $buyItems = collect();
-        } else {
-            // 通常プロフィール画面（PG09）
-            $buyItems = collect();
-            $sellItems = collect();
+
+            $page = 'sell'; // 不正値は sell に寄せる
         }
-        
-        return view('mypage.index', compact('user', 'page', 'buyItems', 'sellItems'));
+
+        return view('mypage.index', compact('user', 'page', 'items'));
     }
 
-    // プロフィール編集画面表示（PG10）
+    // プロフィール編集画面（PG10）
     public function edit()
     {
         $user = auth()->user();
@@ -62,11 +58,13 @@ class ProfileController extends Controller
             'building' => 'nullable|string|max:255',
         ]);
 
+        // プロフィール画像アップロード
         if ($request->hasFile('profile_image')) {
             $path = $request->file('profile_image')->store('profile', 'public');
             $user->profile_image = $path;
         }
 
+        // 基本情報更新
         $user->name = $validated['name'];
         $user->postal_code = $validated['postal_code'];
         $user->address = $validated['address'];
