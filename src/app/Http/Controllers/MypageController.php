@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Item;
 use App\Models\Purchase;
 
-class ProfileController extends Controller
+class MypageController extends Controller
 {
     // プロフィール画面（PG09〜PG12）
     public function index(Request $request)
@@ -25,7 +25,7 @@ class ProfileController extends Controller
             $items = Purchase::where('user_id', $user->id)
                 ->with('item.images')
                 ->get()
-                ->pluck('item');
+                ->map->item;
         } else {
             // 出品した商品一覧（PG12）
             $items = Item::where('user_id', $user->id)

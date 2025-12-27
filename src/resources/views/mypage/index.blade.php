@@ -23,9 +23,9 @@
 @endsection
 
 @section('content')
-<div class="container">
 
-    {{-- プロフィールヘッダー --}}
+{{-- プロフィールヘッダー --}}
+<div class="container">
     <div class="mypage-header">
         <div class="profile-image-wrapper">
             @if ($user->profile_image)
@@ -43,6 +43,7 @@
             </a>
         </div>
     </div>
+</div>
 
     {{-- タブ --}}
     <div class="mypage-tabs">
@@ -56,25 +57,21 @@
             購入した商品
         </a>
     </div>
+    <div class="mypage-tab-border"></div>
 
     {{-- 商品一覧 --}}
     <div class="mypage-items">
-        @forelse ($items as $item)
+        @foreach ($items as $item)
             <a href="{{ url('/item/' . $item->id) }}" class="mypage-item-card">
                 <div class="item-image-wrapper">
                     @if ($item->images->first())
-                        <img src="{{ asset('storage/' . $item->images->first()->path) }}" class="item-image">
+                        <img src="{{ asset('storage/' . $item->images->first()->path) }}" class="item-image" alt="{{ $item->name }}">
                     @else
                         <div class="item-image-placeholder">No Image</div>
                     @endif
                 </div>
                 <p class="item-name">{{ $item->name }}</p>
             </a>
-        @empty
-            <p class="mypage-empty">
-                {{ $page === 'sell' ? '出品した商品はありません。' : '購入した商品はありません。' }}
-            </p>
-        @endforelse
+        @endforeach
     </div>
-</div>
 @endsection

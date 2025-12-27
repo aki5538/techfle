@@ -6,7 +6,7 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\ItemController;
 use App\Http\Controllers\PurchaseController;
 use App\Http\Controllers\SellController;
-use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\MypageController;
 use App\Http\Controllers\AddressController;
 /*
 |--------------------------------------------------------------------------
@@ -57,9 +57,9 @@ Route::get('/sell', [SellController::class, 'create'])->name('sell.create');
 Route::post('/sell', [SellController::class, 'store'])->name('sell.store');
 
 // プロフィール画面（トップ／購入一覧／出品一覧）
-Route::get('/mypage', [ProfileController::class, 'index'])->name('mypage.index');
+Route::get('/mypage', [MypageController::class, 'index'])->name('mypage.index');
 
 // プロフィール編集画面（設定画面）
-Route::get('/mypage/profile', [ProfileController::class, 'edit'])->name('mypage.profile');
-Route::post('/mypage/profile', [ProfileController::class, 'store'])->name('mypage.profile.store');
+Route::get('/mypage/profile', [MypageController::class, 'edit'])->name('mypage.profile');
+Route::post('/mypage/profile', [MypageController::class, 'store'])->name('mypage.profile.store');
 

@@ -94,3 +94,88 @@
     display: inline-block;
 }
 
+.mypage-tabs {
+    width: 1512px;
+    height: 47px;
+    display: flex;
+    align-items: center;
+    gap: 52px; /* ← 336px - 129px - 155px = 約52px */
+    padding-left: 50px;
+    margin-top: 40px;
+}
+
+/* タブ共通 */
+.mypage-tab {
+    width: 155px;
+    height: 40px;
+    font-family: 'Inter', sans-serif;
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 100%;
+    text-align: left;
+    color: #5F5F5F;
+    text-decoration: none;
+}
+
+/* アクティブタブ（赤） */
+.mypage-tab.is-active {
+    color: #FF0000;
+}
+
+/* 下線（Line 2） */
+.mypage-tab-border {
+    width: 1350px;
+    height: 2px;
+    background-color: #5F5F5F;
+    margin-top: 0;
+    margin-left: 0;
+}
+
+.mypage-items {
+    width: 1374px; /* Figmaの全体幅 */
+    display: grid;
+    grid-template-columns: repeat(4, 290px); /* 上段4枚 */
+    grid-auto-rows: 320px; /* カード高さ */
+    gap: 40px 38px; /* 行間40px / 列間38px（Figmaの見た目に合わせて調整） */
+    margin-left: 69px; /* Figmaの left: 69px に合わせる */
+    margin-top: 40px;
+}
+
+/* カード全体 */
+.mypage-item-card {
+    width: 290px;
+    height: 320px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-decoration: none;
+}
+
+/* 画像部分 */
+.item-image-wrapper {
+    width: 290px;
+    height: 281px; /* Figmaの281.27pxを四捨五入 */
+    border-radius: 4px;
+    background-color: #ccc;
+    overflow: hidden;
+}
+
+.item-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* 商品名 */
+.item-name {
+    width: 290px;
+    height: 30px;
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-size: 25px;
+    line-height: 30px; /* 高さと合わせて中央揃え */
+    color: #000;
+    text-align: center;
+    margin: 0;
+    margin-top: 8px; /* 画像との余白（Figmaに近づける） */
+}
