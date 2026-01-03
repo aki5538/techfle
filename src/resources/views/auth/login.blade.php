@@ -8,7 +8,7 @@
 <div class="auth-content">
     <h1 class="login-title">ログイン</h1>
 
-    <form method="POST" action="{{ route('login.store') }}">
+    <form method="POST" action="/login">
         @csrf
 
         <!-- メールアドレス -->

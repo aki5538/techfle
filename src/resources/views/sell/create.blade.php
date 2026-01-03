@@ -1,64 +1,147 @@
 @extends('layouts.app')
 
+@section('head')
+<link rel="stylesheet" href="{{ asset('css/sell.css?v=2') }}">
+@endsection
+
+@section('header-content')
+    <div class="search-form me-3">
+        <input type="text" name="keyword" class="search-input" placeholder="なにをお探しですか？">
+    </div>
+
+    @if(Auth::check())
+        <form method="POST" action="{{ route('logout') }}" class="d-inline me-3">
+            @csrf
+            <button type="submit" class="header-link">ログアウト</button>
+        </form>
+    @else
+        <a href="{{ route('login') }}" class="header-link me-3">ログイン</a>
+    @endif
+
+    <a href="{{ route('mypage.index') }}" class="header-link me-3">マイページ</a>
+    <a href="{{ route('sell.create') }}" class="btn btn-outline-dark">出品</a>
+@endsection
+
+
 @section('content')
 <div class="container">
-    <h1>商品出品</h1>
+    <h1 class="page-title">商品の出品</h1>
 
     <form method="POST" action="{{ route('sell.store') }}" enctype="multipart/form-data">
         @csrf
 
-        {{-- 商品名 --}}
-        <div class="mb-3">
-            <label for="name" class="form-label">商品名</label>
-            <input type="text" name="name" id="name" class="form-control" required>
+        {{-- 商品画像（文字） --}}
+        <p class="image-label">商品画像</p>
+
+        {{-- 画像表示欄 --}}
+        <div class="image-drop-area">
+            <label for="images" class="image-select-btn">
+                画像を選択する
+            </label>
+            <input type="file" id="images" name="images[]" multiple style="display:none;">
         </div>
 
-        {{-- ブランド名 --}}
-        <div class="mb-3">
-            <label for="brand" class="form-label">ブランド名</label>
-            <input type="text" name="brand" id="brand" class="form-control">
+        <div class="detail-section">
+            <div class="detail-header">商品の詳細</div>
+
+            {{-- カテゴリー --}}
+            <div class="category-section">
+                <div class="category-title">カテゴリー</div>
+
+                <div class="category-tags">
+                    <div class="category-tag" data-id="1" data-name="ファッション">ファッション</div>
+                    <div class="category-tag" data-id="2" data-name="家電">家電</div>
+                    <div class="category-tag" data-id="3" data-name="インテリア">インテリア</div>
+                    <div class="category-tag" data-id="4" data-name="レディース">レディース</div>
+                    <div class="category-tag" data-id="5" data-name="メンズ">メンズ</div>
+                    <div class="category-tag" data-id="6" data-name="コスメ">コスメ</div>
+                    <div class="category-tag" data-id="7" data-name="本">本</div>
+                    <div class="category-tag" data-id="8" data-name="ゲーム">ゲーム</div>
+                    <div class="category-tag" data-id="9" data-name="スポーツ">スポーツ</div>
+                    <div class="category-tag" data-id="10" data-name="キッチン">キッチン</div>
+                    <div class="category-tag" data-id="11" data-name="ハンドメイド">ハンドメイド</div>
+                    <div class="category-tag" data-id="12" data-name="アクセサリー">アクセサリー</div>
+                    <div class="category-tag" data-id="13" data-name="おもちゃ">おもちゃ</div>
+                    <div class="category-tag" data-id="14" data-name="ベビー・キッズ">ベビー・キッズ</div>
+                </div>
+
+                <div id="category-hidden-container"></div>
+            </div>
+
+            {{-- 商品の状態 --}}
+            <div class="condition-section">
+                <div class="condition-title">商品の状態</div>
+
+                <select name="status" class="condition-select">
+                    <option value="" disabled selected>選択してください</option>
+                    <option value="new">新品・未使用</option>
+                    <option value="like-new">未使用に近い</option>
+                    <option value="no-damage">目立った傷や汚れなし</option>
+                    <option value="slight-damage">やや傷や汚れあり</option>
+                    <option value="damage">傷や汚れあり</option>
+                    <option value="bad">全体的に状態が悪い</option>
+                </select>
+            </div>
         </div>
 
-        {{-- 価格 --}}
-        <div class="mb-3">
-            <label for="price" class="form-label">価格</label>
-            <input type="number" name="price" id="price" class="form-control" required>
+        <div class="product-name-description-block">
+            <div class="product-name-description-title">商品名と説明</div>
+            <div class="product-name-description-border"></div>
+        </div>
+       
+        <div class="product-name-block">
+            <div class="product-name-label">商品名</div>
+            <input type="text" name="name" class="product-name-input">
         </div>
 
-        {{-- 商品説明 --}}
-        <div class="mb-3">
-            <label for="description" class="form-label">商品説明</label>
-            <textarea name="description" id="description" class="form-control" required></textarea>
+        <div class="brand-name-block">
+            <div class="brand-name-label">ブランド名</div>
+            <input type="text" name="brand" class="brand-name-input">
         </div>
 
-        {{-- 商品の状態 --}}
-        <div class="mb-3">
-            <label for="status" class="form-label">商品の状態</label>
-            <select name="status" id="status" class="form-select" required>
-                <option value="新品">新品</option>
-                <option value="良好">良好</option>
-                <option value="やや傷や汚れあり">やや傷や汚れあり</option>
-                <option value="状態が悪い">状態が悪い</option>
-            </select>
+        <div class="product-description-block">
+            <div class="product-description-label">商品の説明</div>
+            <textarea name="description" class="product-description-input"></textarea>
         </div>
 
-        {{-- カテゴリ複数選択 --}}
-        <div class="mb-3">
-            <label for="categories" class="form-label">カテゴリ</label>
-            <select name="categories[]" id="categories" class="form-select" multiple required>
-                @foreach($categories as $category)
-                    <option value="{{ $category->id }}">{{ $category->name }}</option>
-                @endforeach
-            </select>
+        <div class="price-block">
+            <div class="price-label">販売価格</div>
+            <div class="price-input-wrapper">
+                <span class="price-yen">¥</span>
+                <input type="text" name="price" class="price-input">
+            </div>
         </div>
 
-        {{-- 商品画像 --}}
-        <div class="mb-3">
-            <label for="images" class="form-label">商品画像</label>
-            <input type="file" name="images[]" id="images" class="form-control" multiple>
-        </div>
-
-        <button type="submit" class="btn btn-success">出品する</button>
+        <button class="submit-button">出品する</button>
     </form>
+
+    <script>
+        document.querySelectorAll('.category-tag').forEach(tag => {
+            tag.addEventListener('click', () => {
+                tag.classList.toggle('selected');
+
+                const id = tag.dataset.id;
+                const key = id;
+                const container = document.getElementById('category-hidden-container');
+
+                if (tag.classList.contains('selected')) {
+                    const input = document.createElement('input');
+                    input.type = 'hidden';
+                    input.name = 'categories[]';
+                    input.value = id;
+                    input.dataset.key = key;
+                    container.appendChild(input);
+                } else {
+                    const target = container.querySelector(`input[data-key="${key}"]`);
+                    if (target) target.remove();
+                }
+            });
+        });
+    </script>
 </div>
 @endsection
+
+
+
+
+

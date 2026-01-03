@@ -18,12 +18,16 @@ class CreateItemsTable extends Migration
             $table->unsignedBigInteger('user_id');
             $table->string('name', 255);
             $table->string('brand', 255)->nullable();
-            $table->text('description');
+            $table->text('description')->nullable();
             $table->integer('price');
             $table->string('status', 50);
+            $table->json('categories'); // ← 複数カテゴリ（FN028）
             $table->timestamps();
 
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('user_id')
+                ->references('id')
+                ->on('users')
+                ->onDelete('cascade');
         });
     }
 

@@ -19,7 +19,10 @@ class CreateItemImagesTable extends Migration
             $table->string('path', 255);
             $table->timestamps();
 
-            $table->foreign('item_id')->references('id')->on('items')->onDelete('cascade');
+            $table->foreign('item_id')
+                ->references('id')
+                ->on('items')
+                ->onDelete('cascade');
         });
     }
 

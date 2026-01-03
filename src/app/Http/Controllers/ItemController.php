@@ -22,7 +22,8 @@ class ItemController extends Controller
 
         //マイリスト（いいねした商品だけ）
         if ($tab === 'mylist' && $userId) {
-            $items = Item::whereHas('likes', function ($q) use ($userId) {
+            $items = Item::with('images')   // ← ★ 追加
+                ->whereHas('likes', function ($q) use ($userId) {
                     $q->where('user_id', $userId);
                 })
                 ->when($keyword, function ($q) use ($keyword) {
@@ -34,7 +35,7 @@ class ItemController extends Controller
         }
 
         //通常の商品一覧（未ログインでも表示OK）
-        $items = Item::query()
+        $items = Item::with('images')   // ← ★ 追加
             ->when($userId, function ($q) use ($userId) {
                 //自分の商品を除外（仕様書 FN014-4）
                 $q->where('user_id', '!=', $userId);
@@ -101,5 +102,45 @@ class ItemController extends Controller
         }
 
         return view('items.show', compact('item'));
+    }
+
+    public function store(Request $request)
+    {
+        // バリデーション（必要に応じて調整）
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'brand' => 'nullable|string|max:255',
+            'description' => 'nullable|string',
+            'price' => 'required|integer',
+            'status' => 'required|string',
+            'categories' => 'required|array',
+            'images.*' => 'image|mimes:jpg,jpeg,png|max:2048',
+        ]);
+
+        // 商品を保存
+        $item = Item::create([
+            'user_id' => auth()->id(),
+            'name' => $request->name,
+            'brand' => $request->brand,
+            'description' => $request->description,
+            'price' => $request->price,
+            'status' => $request->status,
+            'categories' => json_encode($request->categories),
+        ]);
+
+        // 画像を保存（複数対応）
+        if ($request->hasFile('images')) {
+            foreach ($request->file('images') as $image) {
+                $path = $image->store('items', 'public');
+
+                ItemImage::create([
+                    'item_id' => $item->id,
+                    'image_path' => $path,
+                ]);
+            }
+        }
+
+        return redirect()->route('items.index')
+            ->with('success', '商品を登録しました');
     }
 }

@@ -27,8 +27,8 @@ class ImageSeeder extends Seeder
 
         foreach ($items as $index => $item) {
             Image::create([
-                'item_id' => $item->id,
-                'path' => $imageUrls[$index],
+                'item_id' => 1,
+                'path' => 'https://coachtech-matter.s3.ap-northeast-1.amazonaws.com/image/Armani+Mens+Clock.jpg',
             ]);
         }
     }

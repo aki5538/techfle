@@ -19,6 +19,10 @@ class Item extends Model
         'img_url',
     ];
 
+    protected $casts = [
+        'categories' => 'array',
+    ];
+
     public function purchase()
     {
         return $this->hasOne(Purchase::class, 'item_id');
@@ -35,11 +39,6 @@ class Item extends Model
         return $this->hasMany(Comment::class);
     }
 
-    public function categories()
-    {
-        return $this->belongsToMany(Category::class);
-    }
-
     public function user()
     {
         return $this->belongsTo(User::class);
@@ -47,6 +46,11 @@ class Item extends Model
 
     public function images()
     {
-        return $this->hasMany(ItemImage::class, 'item_id', 'id');
+        return $this->hasMany(Image::class, 'item_id', 'id');
+    }
+
+    public function categories()
+    {
+        return $this->belongsToMany(Category::class, 'category_item', 'item_id', 'category_id');
     }
 }

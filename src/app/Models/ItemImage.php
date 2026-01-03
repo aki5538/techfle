@@ -11,7 +11,7 @@ class ItemImage extends Model
 
     protected $fillable = [
         'item_id',
-        'path',
+        'image_path',
     ];
 
     public function item()

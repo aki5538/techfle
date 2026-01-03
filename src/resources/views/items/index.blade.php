@@ -39,7 +39,11 @@
                 <div class="item-card">
 
                     <a href="{{ route('items.show', $item->id) }}">
-                        <img src="{{ $item->img_url }}" class="item-image" alt="{{ $item->name }}">
+                        @if ($item->images->first())
+                            <img src="{{ $item->images->first()->path }}"
+                                class="item-image"
+                                alt="{{ $item->name }}">
+                        @endif
                     </a>
 
                     @if(in_array($item->id, $purchasedItemIds))

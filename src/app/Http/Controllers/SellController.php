@@ -17,24 +17,33 @@ class SellController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'price' => 'required|integer|min:1',
+            'name'        => 'required|string|max:255',
+            'brand'       => 'nullable|string|max:255',
+            'price'       => 'required|integer|min:1',
             'description' => 'nullable|string',
-            'images.*' => 'image|mimes:jpg,jpeg,png|max:2048',
+            'status'      => 'required|string',
+            'categories'  => 'required|array',
+            'categories.*'=> 'string',
+            'images.*'    => 'image|mimes:jpg,jpeg,png|max:2048', // 応用部分（残す）
         ]);
 
+        // 商品登録（画像以外）
         $item = Item::create([
-            'user_id' => auth()->id(),
-            'name' => $validated['name'],
-            'price' => $validated['price'],
+            'user_id'     => auth()->id(),
+            'name'        => $validated['name'],
+            'brand'       => $validated['brand'] ?? '',
+            'price'       => $validated['price'],
             'description' => $validated['description'] ?? '',
+            'status'      => $validated['status'],
         ]);
 
-        // 画像保存
+        $item->categories()->sync($validated['categories']);
+
+        // 画像保存（応用部分：今は残すだけ）
         if ($request->hasFile('images')) {
             foreach ($request->file('images') as $image) {
-                $path = $image->store('images', 'public');
-                $item->images()->create(['path' => $path]);
+                $path = $image->store('items', 'public');
+                $item->images()->create(['image_path' => $path]);
             }
         }
 

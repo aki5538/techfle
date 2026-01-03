@@ -1,0 +1,207 @@
+/* 検索フォーム */
+.search-form {
+    width: 480px;
+}
+
+.search-input {
+    width: 100%;
+    height: 40px;
+    font-size: 18px;
+    padding-left: 15px;
+}
+
+/* ログイン / ログアウト / マイページ */
+.header-link {
+    font-size: 18px;
+    color: #fff;
+    text-decoration: none;
+    background: none;
+    border: none;
+    padding: 0;
+    font: inherit;
+    cursor: pointer;
+}
+
+/* 出品ボタン */
+.btn-outline-dark {
+    width: 90px;
+    height: 40px;
+    font-size: 18px;
+    border-radius: 4px;
+    border: 1px solid #000;
+    background: #fff;
+    color: #000;
+}
+
+.profile-title {
+    font-family: 'Inter', sans-serif;
+    font-weight: 700;
+    font-size: 36px;
+    line-height: 100%;
+    color: #000;
+    width: 299px;
+    height: 47px;
+    position: absolute;
+    top: 139px;
+    left: 606px;
+}
+
+.profile-image-block {
+    position: absolute;
+    top: 233px;
+    left: 416px;
+    display: flex;
+    align-items: center;
+    gap: 40px;
+}
+
+.profile-image {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    background-color: #D9D9D9;
+}
+
+.select-image-button {
+    width: 179px;
+    height: 48px;
+    font-family: 'Inter', sans-serif;
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 100%;
+    color: #FF5555;
+    background-color: #FFFFFF;
+    border: 1px solid #FF5555;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+/* 入力欄全体の大枠 */
+.form-area {
+    position: absolute;
+    width: 680px;
+    height: 479px;
+    top: 496px;
+    left: 416px;
+}
+
+/* 各ブロック共通 */
+.form-block {
+    width: 680px;
+    height: 92px;
+    position: absolute;
+}
+
+/* ユーザー名ブロック（Figma: top 459 → 大枠内では 0） */
+.user-name-block {
+    top: 0px;
+    left: 0px;
+}
+
+/* 郵便番号ブロック（Figma: top 613 → 大枠内では 613 - 496 = 117px） */
+.postal-block {
+    top: 117px;
+    left: 0px;
+}
+
+/* ラベル（ユーザー名・郵便番号） */
+.form-label {
+    font-family: 'Inter', sans-serif;
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 100%;
+    color: #000;
+    display: block;
+    margin-bottom: 4px;
+}
+
+/* 入力欄 */
+.form-input {
+    width: 100%;
+    height: 55px;
+    border: 1px solid #5F5F5F;
+    border-radius: 4px;
+    font-family: 'Inter', sans-serif;
+    font-weight: 700;
+    font-size: 24px;
+    padding: 8px 12px;
+    box-sizing: border-box;
+}
+
+/* 住所ブロック（748px → 252px） */
+.address-block {
+    top: 252px;
+    left: 0px;
+}
+
+/* 建物名ブロック（883px → 387px） */
+.building-block {
+    top: 387px;
+    left: 0px;
+}
+
+/* ラベル（住所・建物名） */
+.form-label {
+    font-family: 'Inter', sans-serif;
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 100%;
+    color: #000;
+    display: block;
+    margin-bottom: 4px;
+}
+
+/* 入力欄 */
+.form-input {
+    width: 100%;
+    height: 55px;
+    border: 1px solid #5F5F5F;
+    border-radius: 4px;
+    font-family: 'Inter', sans-serif;
+    font-weight: 700;
+    font-size: 24px;
+    padding: 8px 12px;
+    box-sizing: border-box;
+    color: #000;
+}
+
+/* 更新ボタンのブロック（位置は後で調整） */
+.update-button-block {
+    position: absolute;
+    width: 680px;
+    height: 60px;
+    top: 1050px; /* ← form-area 内での位置。後で調整可能 */
+    left: 416px;
+}
+
+/* 更新ボタン本体 */
+.update-button {
+    width: 100%;
+    height: 60px;
+    background-color: #FF5555;
+    border: none;
+    border-radius: 5px;
+
+    font-family: 'Inter', sans-serif;
+    font-weight: 700;
+    font-size: 26px;
+    line-height: 100%;
+    color: #FFFFFF;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    cursor: pointer;
+}
+
+.form-input::placeholder {
+    color: #D9D9D9;
+    font-family: 'Inter', sans-serif;
+    font-weight: 700;
+}

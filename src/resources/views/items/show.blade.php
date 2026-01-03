@@ -24,7 +24,11 @@
 <div class="container">
     {{-- 商品詳細2カラム --}}
     <div class="item-detail">
-        <img src="{{ $item->img_url }}" class="item-detail-image" alt="{{ $item->name }}">
+        @if ($item->images->first())
+            <img src="{{ $item->images->first()->path }}"
+                class="item-detail-image"
+                alt="{{ $item->name }}">
+        @endif
     </div>
 
     <div class="item-info">
@@ -73,7 +77,7 @@
                 <span class="category-title">カテゴリー</span>
 
                 <div class="category-tags">
-                    @forelse($item->categories as $category)
+                    @forelse(($item->categories ?? []) as $category)
                         <span class="category-tag">{{ $category->name }}</span>
                     @empty
                         <span class="category-tag">なし</span>
@@ -82,7 +86,17 @@
             </div>
 
             {{-- 商品の状態 --}}
-            <p class="item-meta-row">商品の状態：{{ $item->status }}</p>
+            <p class="item-meta-row">
+                商品の状態：
+                {{
+                    [
+                        'no-damage' => '傷や汚れなし',
+                        'slightly-damaged' => 'やや傷や汚れあり',
+                        'damaged' => '傷や汚れあり',
+                        'bad' => '状態が悪い'
+                    ][$item->status] ?? '不明'
+                }}
+            </p>
         </div>
 
         <div class="comments mt-5">
@@ -129,7 +143,4 @@
         </div>
     </div>
 </div>
-
-
-
 @endsection
