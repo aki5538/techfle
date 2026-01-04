@@ -6,7 +6,7 @@
 
 @section('header-content')
     <form method="GET" action="{{ url('/') }}" class="search-form me-3">
-        <input type="text" name="keyword" class="search-input" placeholder="なにをお探しですか？">
+        <input type="text" name="keyword" value="{{ request('keyword') }}" class="search-input" placeholder="なにをお探しですか？">
     </form>
 
     @if(Auth::check())

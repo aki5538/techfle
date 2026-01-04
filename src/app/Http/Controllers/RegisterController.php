@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\RegisterRequest;
 use App\Models\User;
+use Illuminate\Auth\Events\Registered;
+use Illuminate\Support\Facades\Auth;
 
 class RegisterController extends Controller
 {
@@ -12,13 +14,18 @@ class RegisterController extends Controller
         // バリデーション済みデータを取得
         $validated = $request->validated();
         // ユーザー登録処理
-        User::create([
+        $user = User::create([
             'name' => $validated['name'],
             'email' => $validated['email'],
             'password' => bcrypt($validated['password']),
         ]);
 
-        // 登録後はログイン画面へリダイレクト
-        return redirect()->route('mypage.profile');
+        // メール送信のトリガー
+        event(new Registered($user));
+        // 登録後にログインさせる（Breezeと同じ挙動）
+        Auth::login($user);
+
+        // 認証画面へ
+        return redirect()->route('verification.notice');
     }
 }

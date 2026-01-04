@@ -34,26 +34,21 @@
         <div class="form-block">
             <label class="form-label">郵便番号</label>
             <input type="text" name="postal_code" class="form-input"
-                   value="{{ old('postal_code', $currentAddress->postal_code ?? '') }}" required>
+                value="{{ old('postal_code', $address->postal_code ?? '') }}" required>
         </div>
 
         {{-- 住所 --}}
         <div class="form-block">
             <label class="form-label">住所</label>
             <input type="text" name="address" class="form-input"
-                value="{{ old('address',
-                    ($currentAddress->prefecture ?? '') .
-                    ($currentAddress->city ?? '') .
-                    ($currentAddress->block ?? '')
-                ) }}"
-                required>
+                value="{{ old('address', $address->address ?? '') }}" required>
         </div>
 
         {{-- 建物名 --}}
         <div class="form-block">
             <label class="form-label">建物名</label>
             <input type="text" name="building" class="form-input"
-                   value="{{ old('building', $currentAddress->building ?? '') }}">
+               value="{{ old('building', $address->building ?? '') }}">
         </div>
 
         {{-- 更新ボタン --}}

@@ -17,13 +17,16 @@ class CreateAddressesTable extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->string('postal_code', 10);
-            $table->string('prefecture', 50);
-            $table->string('city', 100);
-            $table->string('block', 100);
-            $table->string('building', 100)->nullable();
+            $table->string('address', 255);
+            $table->string('building', 255)->nullable();
             $table->timestamps();
 
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('user_id')
+                ->references('id')
+                ->on('users')
+                ->onDelete('cascade');
+
+
         });
     }
 

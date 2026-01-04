@@ -22,6 +22,7 @@ class CreateItemsTable extends Migration
             $table->integer('price');
             $table->string('status', 50);
             $table->json('categories'); // ← 複数カテゴリ（FN028）
+            $table->boolean('sold')->default(false);
             $table->timestamps();
 
             $table->foreign('user_id')

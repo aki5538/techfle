@@ -5,7 +5,10 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Item;
 use App\Models\Purchase;
+use App\Models\Address;
 use Illuminate\Support\Facades\Auth;
+use Stripe\Stripe;
+use Stripe\Checkout\Session;
 
 class PurchaseController extends Controller
 {
@@ -17,8 +20,10 @@ class PurchaseController extends Controller
 
         // 仕様書：初期住所はプロフィール画面で登録済みの住所
         $user = Auth::user();
+        // 配送先住所を取得
+        $address = Address::where('user_id', $user->id)->first();
 
-        return view('purchase.create', compact('item', 'user'));
+        return view('purchase.create', compact('item', 'user', 'address'));
     }
 
     // 購入処理
@@ -37,16 +42,26 @@ class PurchaseController extends Controller
             return redirect()->back()->with('error', 'この商品はすでに購入されています。');
         }
 
-        // 購入情報を保存（仕様書：住所はプロフィールの住所を使用）
-        Purchase::create([
+        $address = Address::where('user_id', auth()->id())->first();
+
+        $purchase = Purchase::create([
             'user_id'        => auth()->id(),
             'item_id'        => $item->id,
-            'address_id'        => auth()->user()->address_id,
-            'payment_method' => $request->payment_method,  // ← Stripe連携前提
+            'address_id'     => $address->id,
+            'payment_method' => $request->payment_method,
         ]);
 
         // 商品を sold に更新（仕様書：購入後は sold 表示）
         $item->update(['sold' => true]);
+
+        // Stripe 分岐
+        if ($request->payment_method === 'カード払い') {
+            return $this->startStripeCardPayment($purchase);
+        }
+
+        if ($request->payment_method === 'コンビニ払い') {
+            return $this->startStripeKonbiniPayment($purchase);
+        }
 
         // ⑥ 支払い方法ごとの Stripe 遷移（ルート追加なし）
         if ($request->payment_method === 'カード払い') {
@@ -63,19 +78,93 @@ class PurchaseController extends Controller
         // 万が一どちらでもない場合（通常は起きない）
         return redirect()->route('items.index')->with('success', '購入が完了しました');
     }
+
+    public function startStripeCardPayment($purchase)
+    {
+        // Stripe秘密鍵を設定
+        Stripe::setApiKey(env('STRIPE_SECRET'));
+
+        // 商品情報
+        $item = $purchase->item;
+
+        // Stripe Checkout セッション作成
+        $session = Session::create([
+            'payment_method_types' => ['card'], // ← カード払い
+            'line_items' => [[
+                'price_data' => [
+                    'currency' => 'jpy',
+                    'product_data' => [
+                        'name' => $item->name,
+                    ],
+                    'unit_amount' => $item->price,
+                ],
+                'quantity' => 1,
+            ]],
+            'mode' => 'payment',
+            'success_url' => route('purchase.success'),
+            'cancel_url' => route('purchase.cancel'),
+        ]);
+
+        // Stripe の決済画面へリダイレクト
+        return redirect()->away($session->url);
+    }
+
+    public function startStripeKonbiniPayment($purchase)
+    {
+        Stripe::setApiKey(env('STRIPE_SECRET'));
+
+        $item = $purchase->item;
+
+        $session = Session::create([
+            'payment_method_types' => ['konbini'], // ← コンビニ払い
+            'line_items' => [[
+                'price_data' => [
+                    'currency' => 'jpy',
+                    'product_data' => [
+                        'name' => $item->name,
+                    ],
+                    'unit_amount' => $item->price,
+                ],
+                'quantity' => 1,
+            ]],
+            'mode' => 'payment',
+            'success_url' => route('purchase.success'),
+            'cancel_url' => route('purchase.cancel'),
+        ]);
+
+        return redirect()->away($session->url);
+    }
     
     // 住所更新処理（FN024）
     public function updateAddress(Request $request, $item_id)
     {
         $request->validate([
+            'postal_code' => 'required|string|max:20',
             'address' => 'required|string|max:255',
+            'building' => 'nullable|string|max:255',
         ]);
 
         $user = Auth::user();
 
-        // プロフィール住所を更新
-        $user->address = $request->address;
-        $user->save();
+        // addresses テーブルに保存（user_id で一意）
+        $address = Address::updateOrCreate(
+            ['user_id' => $user->id],
+            [
+                'postal_code' => $request->postal_code,
+                'address' => $request->address,
+                'building' => $request->building,
+            ]
+        );
+
+        // addresses テーブルに保存（user_id で一意）
+        $address = Address::updateOrCreate(
+            ['user_id' => $user->id],
+            [
+                'postal_code' => $request->postal_code,
+                'address' => $request->address,
+                'building' => $request->building,
+            ]
+        );
 
         // 購入画面へ戻る
         return redirect()->route('purchase.create', ['item_id' => $item_id])
@@ -87,6 +176,21 @@ class PurchaseController extends Controller
         $item = Item::findOrFail($item_id);
         $user = Auth::user();
 
-        return view('purchase.address', compact('item', 'user'));
+        $address = Address::where('user_id', $user->id)->first();
+        return view('purchase.address', compact('item', 'user', 'address'));
+            }
+
+    public function success()
+    {
+        // 決済成功後は商品一覧へ戻る（仕様書：購入後は商品一覧へ）
+        return redirect()->route('items.index')
+                        ->with('success', '決済が完了しました');
+    }
+
+    public function cancel()
+    {
+        // キャンセル時は購入画面へ戻す
+        return redirect()->back()
+                        ->with('error', '決済がキャンセルされました');
     }
 }

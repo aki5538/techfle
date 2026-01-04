@@ -53,9 +53,13 @@
 
                 {{-- 住所表示 --}}
                 <p class="address-text">
-                    {{ $user->postal_code }}<br>
-                    {{ $user->address }}
+                    {{ $address->postal_code }}<br>
+                    {{ $address->address }}
+                    {{ $address->building }}
                 </p>
+
+                {{-- hidden を追加 --}}
+                <input type="hidden" name="address_id" value="{{ $address->id }}">
 
                 {{-- Line 21（住所の下線） --}}
                 <div class="section-divider"></div>

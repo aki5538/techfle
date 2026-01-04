@@ -43,7 +43,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
     // 商品購入画面（PG06）
     Route::get('/purchase/{item_id}', [PurchaseController::class, 'create'])
         ->name('purchase.create');
-
     // 購入処理
     Route::post('/purchase/{item_id}', [PurchaseController::class, 'store'])
         ->name('purchase.store');
@@ -66,5 +65,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('/mypage/profile', [MypageController::class, 'store'])->name('mypage.profile.store');
 });
 
+// Stripe 決済成功
+Route::get('/purchase/success', [PurchaseController::class, 'success'])
+    ->name('purchase.success');
+// Stripe 決済キャンセル
+Route::get('/purchase/cancel', [PurchaseController::class, 'cancel'])
+    ->name('purchase.cancel');
 
 
