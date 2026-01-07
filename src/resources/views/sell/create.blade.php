@@ -74,12 +74,10 @@
 
                 <select name="status" class="condition-select">
                     <option value="" disabled selected>選択してください</option>
-                    <option value="new">新品・未使用</option>
-                    <option value="like-new">未使用に近い</option>
+                    <option value="like-new">良好</option>
                     <option value="no-damage">目立った傷や汚れなし</option>
-                    <option value="slight-damage">やや傷や汚れあり</option>
-                    <option value="damage">傷や汚れあり</option>
-                    <option value="bad">全体的に状態が悪い</option>
+                    <option value="damage">やや傷や汚れあり</option>
+                    <option value="bad">状態が悪い</option>
                 </select>
             </div>
         </div>

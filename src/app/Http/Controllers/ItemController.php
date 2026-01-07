@@ -110,10 +110,12 @@ class ItemController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'brand' => 'nullable|string|max:255',
-            'description' => 'nullable|string',
-            'price' => 'required|integer',
+            'description' => 'required|string|max:255',
+            'price' => 'required|integer|min:0',
             'status' => 'required|string',
             'categories' => 'required|array',
+            'categories.*' => 'exists:categories,id',
+            'images' => 'required',
             'images.*' => 'image|mimes:jpg,jpeg,png|max:2048',
         ]);
 
@@ -125,8 +127,12 @@ class ItemController extends Controller
             'description' => $request->description,
             'price' => $request->price,
             'status' => $request->status,
-            'categories' => json_encode($request->categories),
         ]);
+
+        // カテゴリを中間テーブルに保存
+        $item->categories()->sync($request->categories);
+
+
 
         // 画像を保存（複数対応）
         if ($request->hasFile('images')) {
@@ -135,7 +141,7 @@ class ItemController extends Controller
 
                 ItemImage::create([
                     'item_id' => $item->id,
-                    'image_path' => $path,
+                    'path' => $path,
                 ]);
             }
         }

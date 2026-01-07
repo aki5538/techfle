@@ -20,7 +20,7 @@ class Item extends Model
     ];
 
     protected $casts = [
-        'categories' => 'array',
+        //
     ];
 
     public function purchase()
@@ -51,6 +51,6 @@ class Item extends Model
 
     public function categories()
     {
-        return $this->belongsToMany(Category::class, 'category_item', 'item_id', 'category_id');
+        return $this->belongsToMany(Category::class, 'item_category');
     }
 }

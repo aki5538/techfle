@@ -36,14 +36,14 @@ class SellController extends Controller
             'description' => $validated['description'] ?? '',
             'status'      => $validated['status'],
         ]);
-
+        
         $item->categories()->sync($validated['categories']);
 
-        // 画像保存（応用部分：今は残すだけ）
+        // 画像保存
         if ($request->hasFile('images')) {
             foreach ($request->file('images') as $image) {
                 $path = $image->store('items', 'public');
-                $item->images()->create(['image_path' => $path]);
+                $item->images()->create(['path' => $path]);
             }
         }
 
