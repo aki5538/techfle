@@ -40,7 +40,7 @@
 
                     <a href="{{ route('items.show', $item->id) }}">
                         @if ($item->images->first())
-                            <img src="{{ asset('storage/' . $item->images->first()->path) }}"
+                            <img src="{{ $item->images->first()->path }}"
                                 class="item-image"
                                 alt="{{ $item->name }}">
                         @endif

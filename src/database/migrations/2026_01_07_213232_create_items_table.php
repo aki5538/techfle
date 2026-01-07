@@ -15,20 +15,13 @@ class CreateItemsTable extends Migration
     {
         Schema::create('items', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id');
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->string('name', 255);
             $table->string('brand', 255)->nullable();
-            $table->text('description')->nullable();
+            $table->string('description', 255);
             $table->integer('price');
             $table->string('status', 50);
-            $table->json('categories'); // ← 複数カテゴリ（FN028）
-            $table->boolean('sold')->default(false);
             $table->timestamps();
-
-            $table->foreign('user_id')
-                ->references('id')
-                ->on('users')
-                ->onDelete('cascade');
         });
     }
 

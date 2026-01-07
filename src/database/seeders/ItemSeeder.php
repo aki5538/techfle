@@ -20,7 +20,6 @@ class ItemSeeder extends Seeder
                 'brand' => 'Rolax',
                 'description' => 'スタイリッシュなデザインのメンズ腕時計',
                 'status' => '良好',
-                'categories' => [],
             ],
             [
                 'user_id' => $users->random()->id,
@@ -29,7 +28,6 @@ class ItemSeeder extends Seeder
                 'brand' => '西芝',
                 'description' => '高速で信頼性の高いハードディスク',
                 'status' => '目立った傷や汚れなし',
-                'categories' => [],
             ],
             [
                 'user_id' => $users->random()->id,
@@ -38,7 +36,6 @@ class ItemSeeder extends Seeder
                 'brand' => null,
                 'description' => '新鮮な玉ねぎ3束のセット',
                 'status' => 'やや傷や汚れあり',
-                'categories' => [],
             ],
             [
                 'user_id' => $users->random()->id,
@@ -47,7 +44,6 @@ class ItemSeeder extends Seeder
                 'brand' => null,
                 'description' => 'クラシックなデザインの革靴',
                 'status' => '状態が悪い',
-                'categories' => [],
             ],
             [
                 'user_id' => $users->random()->id,
@@ -56,7 +52,6 @@ class ItemSeeder extends Seeder
                 'brand' => null,
                 'description' => '高性能なノートパソコン',
                 'status' => '良好',
-                'categories' => [],
             ],
             [
                 'user_id' => $users->random()->id,
@@ -65,7 +60,6 @@ class ItemSeeder extends Seeder
                 'brand' => null,
                 'description' => '高音質のレコーディング用マイク',
                 'status' => '目立った傷や汚れなし',
-                'categories' => [],
             ],
             [
                 'user_id' => $users->random()->id,
@@ -74,7 +68,6 @@ class ItemSeeder extends Seeder
                 'brand' => null,
                 'description' => 'おしゃれなショルダーバッグ',
                 'status' => 'やや傷や汚れあり',
-                'categories' => [],
             ],
             [
                 'user_id' => $users->random()->id,
@@ -83,7 +76,6 @@ class ItemSeeder extends Seeder
                 'brand' => null,
                 'description' => '使いやすいタンブラー',
                 'status' => '状態が悪い',
-                'categories' => [],
             ],
             [
                 'user_id' => $users->random()->id,
@@ -92,7 +84,6 @@ class ItemSeeder extends Seeder
                 'brand' => 'Starbacks',
                 'description' => '手動のコーヒーミル',
                 'status' => '良好',
-                'categories' => [],
             ],
             [
                 'user_id' => $users->random()->id,
@@ -101,7 +92,6 @@ class ItemSeeder extends Seeder
                 'brand' => null,
                 'description' => '便利なメイクアップセット',
                 'status' => '目立った傷や汚れなし',
-                'categories' => [],
             ],
         ];
 
