@@ -18,6 +18,7 @@ class RegisterController extends Controller
             'name' => $validated['name'],
             'email' => $validated['email'],
             'password' => bcrypt($validated['password']),
+            'postal_code' => $request->postal_code,
         ]);
 
         // メール送信のトリガー
