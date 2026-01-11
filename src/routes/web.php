@@ -9,6 +9,8 @@ use App\Http\Controllers\SellController;
 use App\Http\Controllers\MypageController;
 use App\Http\Controllers\AddressController;
 use App\Http\Controllers\CommentController;
+use App\Http\Controllers\LikeController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -39,6 +41,9 @@ Route::get('/item/{item_id}', [ItemController::class, 'show'])->name('items.show
 Route::post('/item/{item_id}/comment', [CommentController::class, 'store'])
     ->middleware(['auth', 'verified'])
     ->name('comment.store');
+Route::post('/item/{item_id}/like', [LikeController::class, 'store'])
+    ->middleware(['auth'])
+    ->name('item.like');
 
 // ここから「ログイン + メール認証済み」必須
 Route::middleware(['auth', 'verified'])->group(function () {

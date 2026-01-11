@@ -23,29 +23,30 @@
 @endsection
 
 @section('content')
-    <div class="profile-header">
-        <h1 class="profile-title">プロフィール設定</h1>
-
-        <div class="profile-image-block">
-            {{-- プロフィール画像表示 --}}
-            @if(Auth::check() && Auth::user()->profile_image)
-                <img src="{{ asset('storage/' . Auth::user()->profile_image) }}" alt="プロフィール画像" class="profile-image">
-            @else
-                <img src="{{ asset('images/default-profile.png') }}" alt="プロフィール画像" class="profile-image">
-            @endif
-
-            {{-- 画像選択ボタン --}}
-            <label for="profile_image" class="select-image-button">画像を選択する</label>
-            <input type="file" id="profile_image" name="profile_image" accept="image/*" class="d-none">
-
-            @error('profile_image')
-                <div class="text-danger">{{ $message }}</div>
-            @enderror
-        </div>
-    </div>
-
     <form method="POST" action="{{ route('mypage.profile.store') }}" enctype="multipart/form-data">
         @csrf
+
+        <div class="profile-header">
+            <h1 class="profile-title">プロフィール設定</h1>
+
+            <div class="profile-image-block">
+                {{-- プロフィール画像表示 --}}
+                @if(Auth::check() && Auth::user()->profile_image)
+                    <img src="{{ asset('storage/' . Auth::user()->profile_image) }}" alt="プロフィール画像">
+                    @else
+                    <img src="{{ asset('images/default-profile.png') }}" alt="プロフィール画像" class="profile-image">
+                @endif
+
+                {{-- 画像選択ボタン --}}
+                <div class="image-upload-wrapper">
+                    <label for="profile_image" class="select-image-button">画像を選択する</label>
+                    <input type="file" id="profile_image" name="profile_image" accept="image/*" class="hidden-file">
+                </div>
+                @error('profile_image')
+                    <div class="text-danger">{{ $message }}</div>
+                @enderror
+            </div>
+        </div>
         {{-- 入力欄全体の大枠 --}}
         <div class="form-area">
 
@@ -97,6 +98,5 @@
         <div class="update-button-block">
             <button type="submit" class="update-button">更新する</button>
         </div>
-
     </form>
 @endsection

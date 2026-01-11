@@ -12,21 +12,25 @@ class LikeController extends Controller
     // いいね登録
     public function store($item_id)
     {
-        Like::firstOrCreate([
-            'user_id' => Auth::id(),
-            'item_id' => $item_id,
-        ]);
+        $user_id = Auth::id();
 
-        return back();
-    }
+        // すでにいいねしているか確認
+        $like = Like::where('user_id', $user_id)
+                    ->where('item_id', $item_id)
+                    ->first();
 
-    // いいね解除
-    public function destroy($item_id)
-    {
-        Like::where('user_id', Auth::id())
-            ->where('item_id', $item_id)
-            ->delete();
+        if ($like) {
+            // いいね解除
+            $like->delete();
+        } else {
+            // いいね追加
+            Like::create([
+                'user_id' => $user_id,
+                'item_id' => $item_id,
+            ]);
+        }
 
         return back();
     }
 }
+

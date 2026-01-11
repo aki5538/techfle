@@ -41,7 +41,7 @@
                 @php
                     $liked = auth()->check() && $item->likes->contains('user_id', auth()->id());
                 @endphp
-                <form method="POST" action="{{ url('/item/' . $item->id) }}">
+                <form method="POST" action="{{ route('item.like', $item->id) }}">
                     @csrf
                     <button type="submit" name="like" value="1" style="border:none; background:none; padding:0;">
                         @if ($liked)
@@ -116,7 +116,15 @@
                 </div>
             @empty
                 <div class="comment-box empty-comment">
-                    <div class="comment-icon"></div>
+                    <div class="comment-icon">
+                        @if($comment->user->profile_image)
+                            <img src="{{ asset('storage/' . $comment->user->profile_image) }}" 
+                                alt="ユーザー画像" class="comment-user-image">
+                        @else
+                            <img src="{{ asset('images/default-profile.png') }}" 
+                                alt="デフォルト画像" class="comment-user-image">
+                        @endif
+                    </div>
 
                     <div class="comment-content">
                         <p class="comment-user">&nbsp;</p>
