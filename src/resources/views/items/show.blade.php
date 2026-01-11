@@ -129,16 +129,16 @@
             @endforelse
         </div>
 
-        {{-- ★ コメントフォーム --}}
+        {{-- コメントフォーム --}}
         <div class="comment-form mt-4">
-            <form action="{{ url('/item/' . $item->id) }}" method="POST">
+            <form action="{{ route('comment.store', ['item_id' => $item->id]) }}" method="POST">
                 @csrf
                 <textarea name="comment" class="form-control" rows="3"
                     placeholder="コメントを入力（255文字以内）"></textarea>
                 @error('comment')
                     <p class="text-danger">{{ $message }}</p>
                 @enderror
-                <button type="submit" class="btn btn-primary mt-2">コメントを送信</button>
+                <button type="submit" class="btn btn-primary mt-2">コメントを送信する</button>
             </form>
         </div>
     </div>

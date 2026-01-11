@@ -68,7 +68,7 @@ class ItemController extends Controller
 
             $userId = Auth::id();
 
-            // ① いいね処理
+            // いいね処理
             if ($request->has('like')) {
                 $alreadyLiked = $item->likes->contains('user_id', $userId);
 
@@ -82,20 +82,6 @@ class ItemController extends Controller
                         'item_id' => $item_id,
                     ]);
                 }
-            }
-
-            // ② コメント送信処理
-            if ($request->has('comment')) {
-
-                $request->validate([
-                    'comment' => 'required|max:255',
-                ]);
-
-                Comment::create([
-                    'user_id' => $userId,
-                    'item_id' => $item_id,
-                    'comment' => $request->comment,
-                ]);
             }
 
             return back();
