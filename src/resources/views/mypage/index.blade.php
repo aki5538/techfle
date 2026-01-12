@@ -31,7 +31,7 @@
             @if ($user->profile_image)
                 <img src="{{ asset('storage/' . $user->profile_image) }}" alt="プロフィール画像" class="profile-image">
             @else
-                <div class="profile-image-placeholder">No Image</div>
+                <div class="default-profile-icon"></div>
             @endif
         </div>
 
@@ -65,8 +65,7 @@
             <a href="{{ url('/item/' . $item->id) }}" class="mypage-item-card">
                 <div class="item-image-wrapper">
                     @if ($item->images->first())
-                        <img src="{{ $item->images->first()->path }}"
-                            class="item-image" alt="{{ $item->name }}">
+                        <img src="{{ asset('storage/' . $item->images->first()->path) }}" class="item-image">
                     @else
                         <div class="item-image-placeholder">No Image</div>
                     @endif

@@ -193,6 +193,13 @@
     color: #000;
 }
 
+.comment-user-image {
+    width: 70px;
+    height: 70px;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
 .purchase-wrapper {
     width: 500px;
     margin: 0;

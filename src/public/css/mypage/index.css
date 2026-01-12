@@ -58,6 +58,13 @@
     object-fit: cover;
 }
 
+.default-profile-icon {
+    width: 150px;
+    height: 150px;
+    background-color: #ccc;
+    border-radius: 50%;
+}
+
 /* ユーザー名＋編集ボタン */
 .profile-info-row {
     display: flex;

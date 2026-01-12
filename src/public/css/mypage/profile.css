@@ -64,6 +64,13 @@
     background-color: #D9D9D9;
 }
 
+.default-profile-icon {
+    width: 150px;
+    height: 150px;
+    background-color: #ccc;
+    border-radius: 50%;
+}
+
 .select-image-button {
     width: 179px;
     height: 48px;
@@ -92,6 +99,11 @@
     height: 100%;
     opacity: 0;
     cursor: pointer;
+}
+
+.image-upload-wrapper {
+    position: relative;
+    display: inline-block;
 }
 
 /* 入力欄全体の大枠 */

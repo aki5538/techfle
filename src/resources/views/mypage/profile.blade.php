@@ -30,13 +30,12 @@
             <h1 class="profile-title">プロフィール設定</h1>
 
             <div class="profile-image-block">
-                {{-- プロフィール画像表示 --}}
-                @if(Auth::check() && Auth::user()->profile_image)
-                    <img src="{{ asset('storage/' . Auth::user()->profile_image) }}" alt="プロフィール画像">
-                    @else
-                    <img src="{{ asset('images/default-profile.png') }}" alt="プロフィール画像" class="profile-image">
+                {{-- プロフィール画像表示 --}}                
+                @if($user->profile_image)
+                    <img src="{{ asset('storage/' . $user->profile_image) }}" alt="プロフィール画像" class="profile-image">
+                @else
+                    <div class="default-profile-icon"></div>
                 @endif
-
                 {{-- 画像選択ボタン --}}
                 <div class="image-upload-wrapper">
                     <label for="profile_image" class="select-image-button">画像を選択する</label>

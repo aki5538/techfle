@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Item;
 use App\Models\Purchase;
 use App\Models\Like;
+use App\Models\Comment;
 
 class ItemController extends Controller
 {
@@ -87,7 +88,9 @@ class ItemController extends Controller
             return back();
         }
 
-        return view('items.show', compact('item'));
+        $comments = Comment::where('item_id', $item->id)->get();
+
+        return view('items.show', compact('item', 'comments'));
     }
 
     public function store(Request $request)

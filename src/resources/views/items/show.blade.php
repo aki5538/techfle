@@ -104,7 +104,15 @@
 
             @forelse($item->comments as $comment)
                 <div class="comment-box">
-                    <div class="comment-icon"></div>
+                    <div class="comment-icon">
+                        @if(optional($comment->user)->profile_image)
+                            <img src="{{ asset('storage/' . $comment->user->profile_image) }}" 
+                                alt="ユーザー画像" class="comment-user-image">
+                        @else
+                            <img src="{{ asset('images/default-profile.png') }}" 
+                                alt="デフォルト画像" class="comment-user-image">
+                        @endif
+                    </div>
 
                     <div class="comment-content">
                         <p class="comment-user">{{ $comment->user->name }}</p>
@@ -116,15 +124,7 @@
                 </div>
             @empty
                 <div class="comment-box empty-comment">
-                    <div class="comment-icon">
-                        @if($comment->user->profile_image)
-                            <img src="{{ asset('storage/' . $comment->user->profile_image) }}" 
-                                alt="ユーザー画像" class="comment-user-image">
-                        @else
-                            <img src="{{ asset('images/default-profile.png') }}" 
-                                alt="デフォルト画像" class="comment-user-image">
-                        @endif
-                    </div>
+                    <div class="comment-icon default-icon"></div>
 
                     <div class="comment-content">
                         <p class="comment-user">&nbsp;</p>
