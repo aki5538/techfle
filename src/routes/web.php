@@ -37,11 +37,11 @@ Route::post('/register', [RegisterController::class, 'store'])->name('register.s
 Route::get('/login', [LoginController::class, 'create'])->name('login');
 
 // 商品詳細
-Route::get('/item/{item_id}', [ItemController::class, 'show'])->name('items.show');
-Route::post('/item/{item_id}/comment', [CommentController::class, 'store'])
+Route::get('/items/{item_id}', [ItemController::class, 'show'])->name('items.show');
+Route::post('/items/{item_id}/comment', [CommentController::class, 'store'])
     ->middleware(['auth', 'verified'])
     ->name('comment.store');
-Route::post('/item/{item_id}/like', [LikeController::class, 'store'])
+Route::post('/items/{item_id}/like', [LikeController::class, 'store'])
     ->middleware(['auth'])
     ->name('item.like');
 

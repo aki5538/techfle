@@ -95,3 +95,17 @@
     color: inherit;
     cursor: pointer;
 }
+
+.no-image-box {
+    width: 290px;
+    height: 290px;
+    background-color: #e0e0e0; /* 薄いグレー */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #555; /* 少し濃いグレー文字 */
+    font-size: 16px;
+    border-radius: 4px;
+    opacity: 1;
+    transform: rotate(0deg); /* angle: 0 deg に対応 */
+}

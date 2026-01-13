@@ -62,10 +62,10 @@
     {{-- 商品一覧 --}}
     <div class="mypage-items">
         @foreach ($items as $item)
-            <a href="{{ url('/item/' . $item->id) }}" class="mypage-item-card">
+            <a href="{{ url('/items/' . $item->id) }}" class="mypage-item-card">
                 <div class="item-image-wrapper">
                     @if ($item->images->first())
-                        <img src="{{ asset('storage/' . $item->images->first()->path) }}" class="item-image">
+                        <img src="/storage/{{ $item->images->first()->path }}" class="item-image">
                     @else
                         <div class="item-image-placeholder">No Image</div>
                     @endif

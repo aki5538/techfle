@@ -16,7 +16,6 @@ class Item extends Model
         'brand',
         'description',
         'status',
-        'img_url',
     ];
 
     protected $casts = [
@@ -46,7 +45,7 @@ class Item extends Model
 
     public function images()
     {
-        return $this->hasMany(Image::class, 'item_id', 'id');
+        return $this->hasMany(ItemImage::class, 'item_id', 'id');
     }
 
     public function categories()

@@ -19,9 +19,13 @@
 
                 {{-- 商品情報 --}}
                 <div class="d-flex">
-                    <img src="{{ $item->img_url }}"
-                         alt="{{ $item->name }}"
-                         class="product-image">
+                    @if ($item->images->first())
+                        <img src="{{ $item->images->first()->path }}"
+                            alt="{{ $item->name }}"
+                            class="product-image">
+                    @else
+                        <div class="product-image-placeholder">No Image</div>
+                    @endif
 
                     <div class="product-info">
                         <h3 class="product-name">{{ $item->name }}</h3>

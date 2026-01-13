@@ -43,6 +43,8 @@
                             <img src="{{ $item->images->first()->path }}"
                                 class="item-image"
                                 alt="{{ $item->name }}">
+                        @else
+                            <div class="no-image-box">No Image</div>
                         @endif
                     </a>
 

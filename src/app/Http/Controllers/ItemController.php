@@ -23,7 +23,8 @@ class ItemController extends Controller
 
         //マイリスト（いいねした商品だけ）
         if ($tab === 'mylist' && $userId) {
-            $items = Item::with('images')   // ← ★ 追加
+            $items = Item::with('images')
+                ->whereHas('images') // ★ 画像がある商品だけ
                 ->whereHas('likes', function ($q) use ($userId) {
                     $q->where('user_id', $userId);
                 })
@@ -36,9 +37,8 @@ class ItemController extends Controller
         }
 
         //通常の商品一覧（未ログインでも表示OK）
-        $items = Item::with('images')   // ← ★ 追加
+        $items = Item::with('images')
             ->when($userId, function ($q) use ($userId) {
-                //自分の商品を除外（仕様書 FN014-4）
                 $q->where('user_id', '!=', $userId);
             })
             ->when($keyword, function ($q) use ($keyword) {

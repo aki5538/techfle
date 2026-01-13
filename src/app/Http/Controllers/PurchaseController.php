@@ -23,6 +23,13 @@ class PurchaseController extends Controller
         // 配送先住所を取得
         $address = Address::where('user_id', $user->id)->first();
 
+        if (!$address) {
+            return redirect()
+                ->route('purchase.address', ['item_id' => $item_id])
+                ->with('error', '先に住所を登録してください。');
+        }
+
+
         return view('purchase.create', compact('item', 'user', 'address'));
     }
 

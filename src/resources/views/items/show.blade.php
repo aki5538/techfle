@@ -25,7 +25,7 @@
     {{-- 商品詳細2カラム --}}
     <div class="item-detail">
         @if ($item->images->first())
-            <img src="{{ $item->images->first()->path }}"
+            <img src="/storage/{{ $item->images->first()->path }}"
                 class="item-detail-image"
                 alt="{{ $item->name }}">
         @endif
