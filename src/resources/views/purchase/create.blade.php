@@ -5,6 +5,21 @@
 @endsection
 
 @section('content')
+{{-- ヘッダーUI（商品詳細画面と同じ構造） --}}
+<div class="page-header-ui">
+    <div class="page-search">
+        <input type="text" placeholder="なにをお探しですか？">
+    </div>
+
+    <div class="page-links">
+        <a href="/login">ログアウト</a>
+        <a href="/mypage">マイページ</a>
+        <form action="/sell" method="GET">
+            <button type="submit" class="sell-btn">出品</button>
+        </form>
+    </div>
+</div>
+
 <div class="container py-4">
 
     <h2 class="mb-4">商品購入</h2>

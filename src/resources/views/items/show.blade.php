@@ -4,8 +4,8 @@
     <link rel="stylesheet" href="{{ asset('css/items/show.css') }}">
 @endsection
 
-@section('content')
 
+@section('header-content')
 {{-- ヘッダーUI --}}
 <div class="page-header-ui">
     <div class="page-search">
@@ -20,12 +20,14 @@
         </form>
     </div>
 </div>
+@endsection
 
+@section('content')
 <div class="container">
     {{-- 商品詳細2カラム --}}
     <div class="item-detail">
         @if ($item->images->first())
-            <img src="/storage/{{ $item->images->first()->path }}"
+            <img src="{{ $item->images->first()->path }}"
                 class="item-detail-image"
                 alt="{{ $item->name }}">
         @endif

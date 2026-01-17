@@ -109,3 +109,63 @@
     opacity: 1;
     transform: rotate(0deg); /* angle: 0 deg に対応 */
 }
+
+@media (max-width: 850px) and (min-width: 768px) {
+
+    /* Bootstrap の col-md-4 を強制上書きして 2列にする */
+    .row > .col-md-4 {
+        flex: 0 0 50% !important;
+        max-width: 50% !important;
+    }
+
+    .item-card {
+        width: 100%;
+    }
+
+    .item-image {
+        width: 100%;
+        max-height: 290px; /* ← ここで画像の大きさを調整できる */
+        object-fit: cover;
+        border-radius: 8px;
+    }
+
+    /* No Image は元のサイズに固定（縦長にならない） */
+    .no-image-box {
+        width: 290px;
+        height: 290px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: #f0f0f0;
+        border-radius: 8px;
+        margin: 0 auto; /* 中央寄せ */
+    }
+
+    .search-form {
+        width: 260px; /* ← これが本体。inputのmax-widthより先に効く */
+    }
+
+    /* 検索バーを少し短く */
+    .search-form input {
+        width: 100%; /* ← 親の幅に合わせてぴったりにする */
+        height: 40px;
+        font-size: 16px;
+        padding-left: 12px;
+    }
+
+    .header-right {
+        gap: 1px; /* ← ここを変えれば確実に詰まる */
+    }
+
+    .header-link {
+        font-size: 14px;
+        white-space: nowrap;
+    }
+
+    .auth-header img {
+        margin-right: 5px;  /* ← ロゴと検索欄の間に余白 */
+    }
+}
+
+
+

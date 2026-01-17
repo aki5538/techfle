@@ -2,7 +2,7 @@
     position: absolute;
     top: 0;
     left: 0;
-    width: 1512px;
+    width: 100%;
     height: 80px;
     display: flex;
     align-items: center;
@@ -19,6 +19,7 @@
 }
 
 .page-search input {
+    position: absolute;
     width: 100%;
     height: 40px;
     padding-left: 15px;
@@ -58,6 +59,12 @@
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+/* 詳細画面だけ共通ヘッダーを上書き */
+.auth-header {
+    width: 100% !important;   /* ← 黒帯を画面幅いっぱいに伸ばす */
+    min-width: 100% !important;
 }
 
 .container {
@@ -426,3 +433,50 @@
     line-height: 1.2;
 }
 
+@media (min-width: 768px) and (max-width: 850px) {
+
+    /* 検索欄を縮める（最重要） */
+    .page-search input {
+        width: 320px; /* ← ここが一番効く。必要なら230〜260で微調整 */
+        height: 36px;
+        font-size: 16px;
+        padding-left: 10px;
+    }
+
+    .page-search {
+        left: 350px;
+    }
+
+    /* ログアウト・マイページ・出品ボタンの間隔を詰める */
+    .page-links {
+        display: flex;
+        align-items: center;
+        gap: 6px; /* ← ここで詰まる */
+    }
+
+    /* ログアウト・マイページの文字を小さくして1行に収める */
+    .page-links a {
+        font-size: 14px;
+        white-space: nowrap;
+    }
+
+    /* ヘッダー全体の左右バランスを整える */
+    .page-header-ui {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .auth-header {
+        padding: 0 20px !important; /* ← 左右に余白を作る */
+        max-width: 100% !important;
+    }
+
+    /* 詳細画面だけ container の幅制限を解除 */
+    .container {
+        max-width: 100% !important;
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+    }
+
+}
