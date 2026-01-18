@@ -22,22 +22,25 @@ class MypageController extends Controller
 
         if ($page === 'buy') {
             // 購入した商品一覧（PG11）
-            $items = Purchase::where('user_id', $user->id)
-                ->with('item.images')
-                ->get()
-                ->map->item;
+            $items = Item::whereIn(
+                    'id',
+                    Purchase::where('user_id', $user->id)->pluck('item_id')
+                )
+                ->with('images')
+                ->get();
+
+            $page = 'buy';
         } else {
             // 出品した商品一覧（PG12）
             $items = Item::where('user_id', $user->id)
                 ->with('images')
                 ->get();
 
-            $page = 'sell'; // 不正値は sell に寄せる
+            $page = 'sell';
         }
 
         return view('mypage.index', compact('user', 'page', 'items'));
     }
-
     // プロフィール編集画面（PG10）
     public function edit()
     {

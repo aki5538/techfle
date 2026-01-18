@@ -64,11 +64,30 @@
         @foreach ($items as $item)
             <a href="{{ url('/items/' . $item->id) }}" class="mypage-item-card">
                 <div class="item-image-wrapper">
-                    @if ($item->images->first())
-                        <img src="/storage/{{ $item->images->first()->path }}" class="item-image">
+                    @php
+                        $image = $item->images->first();
+                    @endphp
+
+                    @if ($image)
+                        @php
+                            $path = $image->path;
+
+                            if (str_starts_with($path, 'http')) {
+                                // フルURLならそのまま使う
+                                $url = $path;
+                            } else {
+                                // ローカルストレージの場合
+                                $url = str_starts_with($path, '/storage/')
+                                    ? $path
+                                    : '/storage/' . $path;
+                            }
+                        @endphp
+                        <img src="{{ $url }}" class="item-image">
                     @else
                         <div class="item-image-placeholder">No Image</div>
                     @endif
+
+
                 </div>
                 <p class="item-name">{{ $item->name }}</p>
             </a>

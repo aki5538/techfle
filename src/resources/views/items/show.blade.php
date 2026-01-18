@@ -26,10 +26,26 @@
 <div class="container">
     {{-- 商品詳細2カラム --}}
     <div class="item-detail">
-        @if ($item->images->first())
-            <img src="{{ $item->images->first()->path }}"
-                class="item-detail-image"
-                alt="{{ $item->name }}">
+        @php
+            $image = $item->images->first();
+        @endphp
+
+        @if ($image)
+            @php
+                $path = $image->path;
+
+                if (str_starts_with($path, 'http')) {
+                    // フルURLならそのまま
+                    $url = $path;
+                } else {
+                    // ローカルストレージの場合
+                    $url = str_starts_with($path, '/storage/')
+                        ? $path
+                        : '/storage/' . $path;
+                }
+            @endphp
+
+            <img src="{{ $url }}" class="item-detail-image" alt="{{ $item->name }}">
         @endif
     </div>
 

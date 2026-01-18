@@ -20,42 +20,26 @@
     gap: 30px;
 }
 
-@media screen and (min-width: 1450px) {
-  .auth-header {
-    padding: 16px 40px;
-    background-color: #000; /* 黒帯 */
-  }
+@media screen and (min-width: 1400px) and (max-width: 1540px) {
+    .auth-header {
+        padding: 16px 40px;
+        background-color: #000; /* 黒帯 */
+    }
 
-  .auth-header img {
-    max-height: 40px;
-    max-width: 160px;
-    height: auto;
-    width: auto;
-  }
+    .auth-header img {
+        max-height: auto;
+        max-width: auto;
+        height: none;
+        width: none;
+    }
 
-  .header-right {
-    gap: 16px;
-  }
+    .header-right {
+        gap: 16px;
+    }
 
-  main {
-    padding: 40px 20px;
-  }
+    main {
+        padding: 40px 20px;
+    }
 }
 
-@media screen and (min-width: 768px) and (max-width: 850px) {
-
-  .auth-header {
-    width: 100vw;
-    max-width: 100vw;
-    padding: 0 16px;
-    box-sizing: border-box;
-  }
-
-  /* ロゴを小さく */
-  .auth-header img {
-    max-height: 25px;
-  }
-
-
-}
 

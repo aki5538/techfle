@@ -186,3 +186,26 @@
     margin: 0;
     margin-top: 8px; /* 画像との余白（Figmaに近づける） */
 }
+
+@media screen and (min-width: 1400px) and (max-width: 1540px) {
+    body {
+        transform: scale(0.92);
+        transform-origin: top left;
+    }
+
+    .header-right {
+        margin-right: 80px; /* ← 数値は調整可能 */
+    }
+
+    .mypage-items {
+        margin-left: 20px !important; /* ← 69px → 20px に縮める */
+    }
+
+    .mypage-item-card,
+    .item-image-wrapper {
+        width: 280px; /* ← 290px → 280px に微調整 */
+    }
+
+
+}
+

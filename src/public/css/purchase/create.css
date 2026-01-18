@@ -2,13 +2,12 @@
     position: absolute;
     top: 0;          /* ← 黒帯より上に配置 */
     left: 0;
-    width: 1512px;
+    width: 100%;
     height: 80px;
-    display: flex;
+    display: block !important;
     align-items: center;
-
-
 }
+
 
 /* 検索ボックス */
 .page-search {
@@ -241,4 +240,30 @@
 
 .purchase-button:hover {
     background-color: #b00000;
+}
+
+@media screen and (min-width: 1400px) and (max-width: 1540px) {
+    .container {
+        margin-left: 0 !important;
+        margin-right: auto !important;
+    }
+
+    .row {
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+    }
+
+    main {
+        transform: scale(0.99);
+        transform-origin: top left;
+    }
+
+    .page-header-ui {
+        transform: translateY(-80px);
+    }
+
+    body {
+        transform: scale(0.9);
+        transform-origin: top left;
+    }
 }
