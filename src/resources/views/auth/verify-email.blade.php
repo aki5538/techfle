@@ -10,7 +10,14 @@
         メール認証を完了してください。
     </div>
 
-    <a href="{{ route('verification.notice') }}" class="verify-main-button">
+    @php
+        use Illuminate\Support\Facades\URL;
+    @endphp
+
+    <a href="{{ URL::signedRoute('verification.verify', [
+            'id' => auth()->id(),
+            'hash' => sha1(auth()->user()->email)
+        ]) }}" class="verify-main-button">
         認証はこちらから
     </a>
 

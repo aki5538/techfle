@@ -13,6 +13,8 @@ use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Str;
 use Laravel\Fortify\Fortify;
 use Illuminate\Auth\Events\Verified;
+use Illuminate\Validation\ValidationException;
+use Illuminate\Support\Facades\Validator;
 
 
 class FortifyServiceProvider extends ServiceProvider
@@ -52,5 +54,28 @@ class FortifyServiceProvider extends ServiceProvider
         });
 
         Fortify::redirects('email-verification', '/mypage/profile');
+
+        Fortify::authenticateUsing(function ($request) {
+             // ここで仕様書どおりのバリデーションを実行
+            Validator::make($request->all(), [
+                'email' => ['required', 'email'],
+                'password' => ['required'],
+            ], [
+                'email.required' => 'メールアドレスを入力してください',
+                'email.email' => 'メールアドレスはメール形式で入力してください',
+                'password.required' => 'パスワードを入力してください',
+            ])->validate();
+
+            // 認証失敗時のメッセージ（仕様書どおり）
+            $user = \App\Models\User::where('email', $request->email)->first();
+
+            if (! $user || ! \Hash::check($request->password, $user->password)) {
+                throw \Illuminate\Validation\ValidationException::withMessages([
+                    'email' => 'ログイン情報が登録されていません',
+                ]);
+            }
+
+            return $user;
+        });
     }
 }

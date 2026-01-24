@@ -24,7 +24,6 @@ class ItemController extends Controller
         //マイリスト（いいねした商品だけ）
         if ($tab === 'mylist' && $userId) {
             $items = Item::with('images')
-                ->whereHas('images') // ★ 画像がある商品だけ
                 ->whereHas('likes', function ($q) use ($userId) {
                     $q->where('user_id', $userId);
                 })
