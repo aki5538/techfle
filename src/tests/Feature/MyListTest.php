@@ -16,11 +16,15 @@ class MyListTest extends TestCase
     {
         $user = User::factory()->create();
 
-        // いいねした商品
-        $likedItem = Item::factory()->create();
+        // いいねした商品（名前を固定）
+        $likedItem = Item::factory()->create([
+            'name' => 'いいね商品',
+        ]);
 
-        // いいねしていない商品
-        $otherItem = Item::factory()->create();
+        // いいねしていない商品（名前を固定）
+        $otherItem = Item::factory()->create([
+            'name' => 'その他商品',
+        ]);
 
         $this->actingAs($user);
 
@@ -42,7 +46,9 @@ class MyListTest extends TestCase
     {
         $user = User::factory()->create();
 
-        $item = Item::factory()->create();
+        $item = Item::factory()->create([
+            'name' => '購入商品',
+        ]);
 
         $this->actingAs($user);
 
@@ -61,7 +67,9 @@ class MyListTest extends TestCase
     /** @test */
     public function 未認証の場合は何も表示されない()
     {
-        $item = Item::factory()->create();
+        $item = Item::factory()->create([
+            'name' => '未認証商品',
+        ]);
 
         // 未ログイン → 仕様書どおり items は空になる前提
         $response = $this->view('items.index', [

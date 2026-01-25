@@ -33,7 +33,7 @@ class UserProfileInfoTest extends TestCase
         ]);
 
         // 住所（購入に必要）
-        Address::create([
+        $address = Address::create([
             'user_id' => $user->id,
             'postal_code' => '123-4567',
             'address' => '福岡県中間市テスト',
@@ -44,7 +44,7 @@ class UserProfileInfoTest extends TestCase
         Purchase::create([
             'user_id' => $user->id,
             'item_id' => $buyItem->id,
-            'address_id' => 1,
+            'address_id' => $address->id, // ← 修正ポイント
             'payment_method' => 'テスト',
         ]);
 
