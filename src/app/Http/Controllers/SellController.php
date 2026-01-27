@@ -24,7 +24,7 @@ class SellController extends Controller
             'status'      => 'required|string',
             'categories'  => 'required|array',
             'categories.*'=> 'string',
-            'images.*'    => 'image|mimes:jpg,jpeg,png|max:2048', // 応用部分（残す）
+            'images.*'    => 'image|mimes:jpg,jpeg,png|max:2048',
         ]);
 
         // 商品登録（画像以外）

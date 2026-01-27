@@ -39,10 +39,19 @@
                 <div class="item-card">
 
                     <a href="{{ route('items.show', $item->id) }}">
-                        @if ($item->images->first())
-                            <img src="{{ $item->images->first()->path }}"
-                                class="item-image"
-                                alt="{{ $item->name }}">
+                        @php
+                            $image = $item->images->first();
+                        @endphp
+
+                        @if ($image)
+                            @php
+                                $path = $image->path;
+                                $url = str_starts_with($path, 'http')
+                                    ? $path
+                                    : '/storage/' . $path;
+                            @endphp
+
+                            <img src="{{ $url }}" class="item-image" alt="{{ $item->name }}">
                         @else
                             <div class="no-image-box">No Image</div>
                         @endif
