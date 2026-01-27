@@ -36,12 +36,11 @@
     border-radius: 4px;
 }
 
-/* 登録ボタン（赤背景＋白文字） */
 .register-submit {
     width: 680px;
     height: 65px;
-    background-color: #FF5555; /* 赤背景 */
-    color: #FFFFFF;            /* 白文字 */
+    background-color: #FF5555;
+    color: #FFFFFF;
     border: none;
     border-radius: 5px;
     font-family: 'Inter', sans-serif;
@@ -62,7 +61,7 @@
 
 .login-link-text {
     font-family: 'Inter', sans-serif;
-    font-weight: 400;     /* Regular */
+    font-weight: 400;
     font-size: 20px;
     line-height: 100%;
     color: #0073CC;

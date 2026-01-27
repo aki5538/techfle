@@ -13,7 +13,7 @@ class AddressController extends Controller
     {
         $item = Item::findOrFail($item_id);
         $user = auth()->user();
-        $currentAddress = $user->address; // hasOne リレーション前提
+        $currentAddress = $user->address;
 
         return view('purchase.address', compact('item', 'user', 'currentAddress'));
     }
@@ -31,7 +31,7 @@ class AddressController extends Controller
 
         $user = auth()->user();
 
-        // ① addresses テーブルに住所を保存（新規 or 更新）
+        // addresses テーブルに住所を保存（新規 or 更新）
         $address = Address::updateOrCreate(
             ['user_id' => $user->id], // 1ユーザー1住所
             [
@@ -43,12 +43,12 @@ class AddressController extends Controller
             ]
         );
 
-        // ② users.address_id を更新（購入画面に反映させるため）
+        // users.address_id を更新（購入画面に反映させるため）
         $user->update([
             'address_id' => $address->id
         ]);
 
-        // ③ 購入画面に戻る
+        // 購入画面に戻る
         return redirect()->route('purchase.create', ['item_id' => $item_id])
                          ->with('success', '住所を更新しました');
     }

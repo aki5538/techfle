@@ -11,9 +11,8 @@ class RegisterController extends Controller
 {
     public function store(RegisterRequest $request)
     {
-        // バリデーション済みデータを取得
         $validated = $request->validated();
-        // ユーザー登録処理
+
         $user = User::create([
             'name' => $validated['name'],
             'email' => $validated['email'],
@@ -21,12 +20,10 @@ class RegisterController extends Controller
             'postal_code' => $request->postal_code,
         ]);
 
-        // メール送信のトリガー
         event(new Registered($user));
-        // 登録後にログインさせる（Breezeと同じ挙動）
+
         Auth::login($user);
 
-        // 認証画面へ
         return redirect()->route('verification.notice');
     }
 }

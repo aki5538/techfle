@@ -1,4 +1,3 @@
-/* 検索フォーム */
 .search-form {
     width: 480px;
 }
@@ -10,7 +9,6 @@
     padding-left: 15px;
 }
 
-/* ログイン / ログアウト / マイページ */
 .header-link {
     font-size: 18px;
     color: #fff;
@@ -22,7 +20,6 @@
     cursor: pointer;
 }
 
-/* 出品ボタン */
 .btn-outline-dark {
     width: 90px;
     height: 40px;
@@ -106,7 +103,6 @@
     display: inline-block;
 }
 
-/* 入力欄全体の大枠 */
 .form-area {
     position: absolute;
     width: 680px;
@@ -115,62 +111,32 @@
     left: 416px;
 }
 
-/* 各ブロック共通 */
 .form-block {
     width: 680px;
     height: 92px;
     position: absolute;
 }
 
-/* ユーザー名ブロック（Figma: top 459 → 大枠内では 0） */
 .user-name-block {
     top: 0px;
     left: 0px;
 }
 
-/* 郵便番号ブロック（Figma: top 613 → 大枠内では 613 - 496 = 117px） */
 .postal-block {
     top: 117px;
     left: 0px;
 }
 
-/* ラベル（ユーザー名・郵便番号） */
-.form-label {
-    font-family: 'Inter', sans-serif;
-    font-weight: 700;
-    font-size: 24px;
-    line-height: 100%;
-    color: #000;
-    display: block;
-    margin-bottom: 4px;
-}
-
-/* 入力欄 */
-.form-input {
-    width: 100%;
-    height: 55px;
-    border: 1px solid #5F5F5F;
-    border-radius: 4px;
-    font-family: 'Inter', sans-serif;
-    font-weight: 700;
-    font-size: 24px;
-    padding: 8px 12px;
-    box-sizing: border-box;
-}
-
-/* 住所ブロック（748px → 252px） */
 .address-block {
     top: 252px;
     left: 0px;
 }
 
-/* 建物名ブロック（883px → 387px） */
 .building-block {
     top: 387px;
     left: 0px;
 }
 
-/* ラベル（住所・建物名） */
 .form-label {
     font-family: 'Inter', sans-serif;
     font-weight: 700;
@@ -181,7 +147,6 @@
     margin-bottom: 4px;
 }
 
-/* 入力欄 */
 .form-input {
     width: 100%;
     height: 55px;
@@ -195,16 +160,14 @@
     color: #000;
 }
 
-/* 更新ボタンのブロック（位置は後で調整） */
 .update-button-block {
     position: absolute;
     width: 680px;
     height: 60px;
-    top: 1050px; /* ← form-area 内での位置。後で調整可能 */
+    top: 1050px;
     left: 416px;
 }
 
-/* 更新ボタン本体 */
 .update-button {
     width: 100%;
     height: 60px;

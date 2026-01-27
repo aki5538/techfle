@@ -35,10 +35,8 @@
                 $path = $image->path;
 
                 if (str_starts_with($path, 'http')) {
-                    // フルURLならそのまま
                     $url = $path;
                 } else {
-                    // ローカルストレージの場合
                     $url = str_starts_with($path, '/storage/')
                         ? $path
                         : '/storage/' . $path;

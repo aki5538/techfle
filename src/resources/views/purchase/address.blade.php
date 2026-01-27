@@ -6,7 +6,6 @@
 
 @section('content')
 
-{{-- ヘッダーUI（商品詳細画面と同じ構造） --}}
 <div class="page-header-ui">
     <div class="page-search">
         <input type="text" placeholder="なにをお探しですか？">
@@ -23,40 +22,34 @@
 
 <div class="address-container">
 
-    {{-- タイトル --}}
     <h2 class="address-title">住所の変更</h2>
 
     <form method="POST" action="{{ route('purchase.address.update', ['item_id' => $item->id]) }}" class="address-form">
         @csrf
         @method('PUT')
 
-        {{-- 郵便番号 --}}
         <div class="form-block">
             <label class="form-label">郵便番号</label>
             <input type="text" name="postal_code" class="form-input"
                 value="{{ old('postal_code', $address->postal_code ?? '') }}" required>
         </div>
 
-        {{-- 住所 --}}
         <div class="form-block">
             <label class="form-label">住所</label>
             <input type="text" name="address" class="form-input"
                 value="{{ old('address', $address->address ?? '') }}" required>
         </div>
 
-        {{-- 建物名 --}}
         <div class="form-block">
             <label class="form-label">建物名</label>
             <input type="text" name="building" class="form-input"
                value="{{ old('building', $address->building ?? '') }}">
         </div>
 
-        {{-- 更新ボタン --}}
         <button type="submit" class="update-btn">
             <span class="update-btn-text">更新する</span>
         </button>
 
     </form>
 </div>
-
 @endsection

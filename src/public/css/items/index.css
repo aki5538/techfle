@@ -31,7 +31,7 @@
     height: 47px;
     margin-top: 20px;
     padding-left: 129px;
-    gap: 52px; /* ← 336px - 129px = 207px → 155px幅を考慮して52pxに調整 */
+    gap: 52px;
 }
 
 .tab {
@@ -99,15 +99,15 @@
 .no-image-box {
     width: 290px;
     height: 290px;
-    background-color: #e0e0e0; /* 薄いグレー */
+    background-color: #e0e0e0;
     display: flex;
     justify-content: center;
     align-items: center;
-    color: #555; /* 少し濃いグレー文字 */
+    color: #555;
     font-size: 16px;
     border-radius: 4px;
     opacity: 1;
-    transform: rotate(0deg); /* angle: 0 deg に対応 */
+    transform: rotate(0deg);
 }
 
 @media screen and (min-width: 1400px) and (max-width: 1540px) {

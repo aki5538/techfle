@@ -18,9 +18,8 @@ class PurchaseController extends Controller
         $item = Item::with(['images', 'categories'])
             ->findOrFail($item_id);
 
-        // 仕様書：初期住所はプロフィール画面で登録済みの住所
         $user = Auth::user();
-        // 配送先住所を取得
+
         $address = Address::where('user_id', $user->id)->first();
 
         if (!$address) {
@@ -36,15 +35,12 @@ class PurchaseController extends Controller
     // 購入処理
     public function store(Request $request, $item_id)
     {
-        // バリデーション（仕様書：支払い方法は必須）
         $request->validate([
             'payment_method' => 'required',
         ]);
 
-        // 商品取得
         $item = Item::findOrFail($item_id);
 
-        // すでに売れていたら購入不可（仕様書の前提）
         if ($item->sold) {
             return redirect()->back()->with('error', 'この商品はすでに購入されています。');
         }
@@ -58,10 +54,8 @@ class PurchaseController extends Controller
             'payment_method' => $request->payment_method,
         ]);
 
-        // 商品を sold に更新（仕様書：購入後は sold 表示）
         $item->update(['sold' => true]);
 
-        // Stripe 分岐
         if ($request->payment_method === 'カード払い') {
             return $this->startStripeCardPayment($purchase);
         }
@@ -70,33 +64,26 @@ class PurchaseController extends Controller
             return $this->startStripeKonbiniPayment($purchase);
         }
 
-        // ⑥ 支払い方法ごとの Stripe 遷移（ルート追加なし）
         if ($request->payment_method === 'カード払い') {
 
-            // Stripe カード決済へ直接リダイレクト
             return $this->startStripeCardPayment($purchase);
 
         } elseif ($request->payment_method === 'コンビニ払い') {
 
-            // Stripe コンビニ決済へ直接リダイレクト
             return $this->startStripeKonbiniPayment($purchase);
         }
 
-        // 万が一どちらでもない場合（通常は起きない）
         return redirect()->route('items.index')->with('success', '購入が完了しました');
     }
 
     public function startStripeCardPayment($purchase)
     {
-        // Stripe秘密鍵を設定
         Stripe::setApiKey(env('STRIPE_SECRET'));
 
-        // 商品情報
         $item = $purchase->item;
 
-        // Stripe Checkout セッション作成
         $session = Session::create([
-            'payment_method_types' => ['card'], // ← カード払い
+            'payment_method_types' => ['card'],
             'line_items' => [[
                 'price_data' => [
                     'currency' => 'jpy',
@@ -112,7 +99,6 @@ class PurchaseController extends Controller
             'cancel_url' => route('purchase.cancel'),
         ]);
 
-        // Stripe の決済画面へリダイレクト
         return redirect()->away($session->url);
     }
 
@@ -123,7 +109,7 @@ class PurchaseController extends Controller
         $item = $purchase->item;
 
         $session = Session::create([
-            'payment_method_types' => ['konbini'], // ← コンビニ払い
+            'payment_method_types' => ['konbini'],
             'line_items' => [[
                 'price_data' => [
                     'currency' => 'jpy',
@@ -153,7 +139,6 @@ class PurchaseController extends Controller
 
         $user = Auth::user();
 
-        // addresses テーブルに保存（user_id で一意）
         $address = Address::updateOrCreate(
             ['user_id' => $user->id],
             [
@@ -163,17 +148,6 @@ class PurchaseController extends Controller
             ]
         );
 
-        // addresses テーブルに保存（user_id で一意）
-        $address = Address::updateOrCreate(
-            ['user_id' => $user->id],
-            [
-                'postal_code' => $request->postal_code,
-                'address' => $request->address,
-                'building' => $request->building,
-            ]
-        );
-
-        // 購入画面へ戻る
         return redirect()->route('purchase.create', ['item_id' => $item_id])
                         ->with('success', '住所を更新しました');
     }
@@ -189,14 +163,12 @@ class PurchaseController extends Controller
 
     public function success()
     {
-        // 決済成功後は商品一覧へ戻る（仕様書：購入後は商品一覧へ）
         return redirect()->route('items.index')
                         ->with('success', '決済が完了しました');
     }
 
     public function cancel()
     {
-        // キャンセル時は購入画面へ戻す
         return redirect()->back()
                         ->with('error', '決済がキャンセルされました');
     }

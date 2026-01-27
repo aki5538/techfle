@@ -8,6 +8,7 @@ use App\Models\Item;
 use App\Models\Purchase;
 use App\Models\Like;
 use App\Models\Comment;
+use App\Models\ItemImage;
 
 class ItemController extends Controller
 {
@@ -59,7 +60,6 @@ class ItemController extends Controller
             'categories',
         ])->findOrFail($item_id);
 
-        // POST のときだけ処理
         if ($request->isMethod('post')) {
 
             if (!Auth::check()) {
@@ -68,7 +68,6 @@ class ItemController extends Controller
 
             $userId = Auth::id();
 
-            // いいね処理
             if ($request->has('like')) {
                 $alreadyLiked = $item->likes->contains('user_id', $userId);
 
@@ -94,7 +93,6 @@ class ItemController extends Controller
 
     public function store(Request $request)
     {
-        // バリデーション（必要に応じて調整）
         $request->validate([
             'name' => 'required|string|max:255',
             'brand' => 'nullable|string|max:255',
@@ -107,7 +105,6 @@ class ItemController extends Controller
             'images.*' => 'image|mimes:jpg,jpeg,png|max:2048',
         ]);
 
-        // 商品を保存
         $item = Item::create([
             'user_id' => auth()->id(),
             'name' => $request->name,
@@ -117,12 +114,8 @@ class ItemController extends Controller
             'status' => $request->status,
         ]);
 
-        // カテゴリを中間テーブルに保存
         $item->categories()->sync($request->categories);
 
-
-
-        // 画像を保存（複数対応）
         if ($request->hasFile('images')) {
             foreach ($request->file('images') as $image) {
                 $path = $image->store('items', 'public');

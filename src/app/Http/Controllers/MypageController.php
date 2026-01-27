@@ -17,11 +17,10 @@ class MypageController extends Controller
             return redirect()->route('login')->with('error', 'ログインしてください');
         }
 
-        // デフォルトは「出品した商品一覧」
         $page = $request->query('page', 'sell');
 
         if ($page === 'buy') {
-            // 購入した商品一覧（PG11）
+
             $items = Item::whereIn(
                     'id',
                     Purchase::where('user_id', $user->id)->pluck('item_id')
@@ -31,7 +30,7 @@ class MypageController extends Controller
 
             $page = 'buy';
         } else {
-            // 出品した商品一覧（PG12）
+
             $items = Item::where('user_id', $user->id)
                 ->with('images')
                 ->get();
@@ -61,13 +60,11 @@ class MypageController extends Controller
             'building' => 'nullable|string|max:255',
         ]);
 
-        // プロフィール画像アップロード
         if ($request->hasFile('profile_image')) {
             $path = $request->file('profile_image')->store('profile', 'public');
             $user->profile_image = $path;
         }
 
-        // 基本情報更新
         $user->name = $validated['name'];
         $user->postal_code = $validated['postal_code'];
         $user->address = $validated['address'];

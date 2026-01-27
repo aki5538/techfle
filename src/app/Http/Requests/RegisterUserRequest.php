@@ -29,8 +29,6 @@ class RegisterUserRequest extends FormRequest
             'password' => ['required', 'min:8', 'confirmed'],
             'password_confirmation' => ['required'],
         ];
-
-
     }
 
     public function messages()

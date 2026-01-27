@@ -15,12 +15,12 @@ class ItemFactory extends Factory
     public function definition()
     {
         return [
-            'user_id' => User::factory(),   // 出品者
+            'user_id' => User::factory(),
             'name' => $this->faker->word(),
             'brand' => $this->faker->word(),
             'description' => $this->faker->sentence(),
             'price' => $this->faker->numberBetween(100, 10000),
-            'status' => 'selling',          // 販売中（テスト用のデフォルト）
+            'status' => 'selling',
         ];
     }
 }

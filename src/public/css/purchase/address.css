@@ -1,19 +1,16 @@
 .page-header-ui {
     position: absolute;
-    top: 0;          /* ← 黒帯より上に配置 */
+    top: 0;
     left: 0;
     width: 1512px;
     height: 80px;
     display: flex;
     align-items: center;
-
-
 }
 
-/* 検索ボックス */
 .page-search {
     position: absolute;
-    left: 475px; /* Figma通り */
+    left: 475px;
     top: 20px;
     width: 480px;
     height: 40px;
@@ -26,10 +23,9 @@
     font-size: 18px;
 }
 
-/* ログアウト・マイページ・出品 */
 .page-links {
     position: absolute;
-    left: 1049px; /* Figma通り */
+    left: 1049px;
     top: 20px;
     width: 280px;
     height: 40px;
@@ -45,7 +41,6 @@
     text-decoration: none;
 }
 
-/* 出品ボタン */
 .sell-btn {
     width: 90px;
     height: 40px;
@@ -65,17 +60,15 @@
     justify-content: center;
 }
 
-/* 全体コンテナ */
 .address-container {
     position: absolute;
-    top: 100px; /* ヘッダーUIの下に配置 */
+    top: 100px;
     left: 50%;
     transform: translateX(-50%);
     width: 800px;
     height: 700px;
 }
 
-/* タイトル */
 .address-title {
     font-family: Inter;
     font-weight: 700;
@@ -85,13 +78,11 @@
     margin-bottom: 80px;
 }
 
-/* フォーム全体 */
 .address-form {
     width: 680px;
     margin: 0 auto;
 }
 
-/* ラベル */
 .form-label {
     font-family: Inter;
     font-weight: 700;
@@ -101,7 +92,6 @@
     margin-bottom: 8px;
 }
 
-/* 入力欄 */
 .form-input {
     width: 680px;
     height: 45px;
@@ -112,12 +102,10 @@
     font-size: 16px;
 }
 
-/* ブロック間の余白 */
 .form-block {
     margin-bottom: 40px;
 }
 
-/* 更新ボタン */
 .update-btn {
     width: 680px;
     height: 60px;
@@ -130,7 +118,6 @@
     cursor: pointer;
 }
 
-/* ボタン内テキスト（Figma完全一致） */
 .update-btn-text {
     font-family: Inter;
     font-weight: 700;

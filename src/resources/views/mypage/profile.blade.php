@@ -30,13 +30,12 @@
             <h1 class="profile-title">プロフィール設定</h1>
 
             <div class="profile-image-block">
-                {{-- プロフィール画像表示 --}}                
                 @if($user->profile_image)
                     <img src="{{ asset('storage/' . $user->profile_image) }}" alt="プロフィール画像" class="profile-image">
                 @else
                     <div class="default-profile-icon"></div>
                 @endif
-                {{-- 画像選択ボタン --}}
+
                 <div class="image-upload-wrapper">
                     <label for="profile_image" class="select-image-button">画像を選択する</label>
                     <input type="file" id="profile_image" name="profile_image" accept="image/*" class="hidden-file">
@@ -46,10 +45,8 @@
                 @enderror
             </div>
         </div>
-        {{-- 入力欄全体の大枠 --}}
-        <div class="form-area">
 
-            {{-- ユーザー名 --}}
+        <div class="form-area">
             <div class="form-block user-name-block">
                 <label for="name" class="form-label">ユーザー名</label>
                 <input type="text" id="name" name="name"
@@ -60,7 +57,6 @@
                 @enderror
             </div>
 
-            {{-- 郵便番号 --}}
             <div class="form-block postal-block">
                 <label for="postal_code" class="form-label">郵便番号</label>
                 <input type="text" id="postal_code" name="postal_code"
@@ -71,7 +67,6 @@
                 @enderror
             </div>
 
-            {{-- 住所 --}}
             <div class="form-block address-block">
                 <label for="address" class="form-label">住所</label>
                 <input type="text" id="address" name="address"
@@ -82,7 +77,6 @@
                 @enderror
             </div>
 
-            {{-- 建物名 --}}
             <div class="form-block building-block">
                 <label for="building" class="form-label">建物名</label>
                 <input type="text" id="building" name="building"

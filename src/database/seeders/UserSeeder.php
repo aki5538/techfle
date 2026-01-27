@@ -11,7 +11,7 @@ class UserSeeder extends Seeder
     public function run()
     {
         User::firstOrCreate(
-            ['email' => 'test@example.com'], // ← ここで重複チェック
+            ['email' => 'test@example.com'],
             [
                 'name' => 'テストユーザー',
                 'password' => Hash::make('password'),

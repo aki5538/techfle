@@ -3,7 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use App\Models\Image;
+use Illuminate\Support\Facades\DB;
 use App\Models\Item;
 
 class ImageSeeder extends Seeder
@@ -30,7 +30,7 @@ class ImageSeeder extends Seeder
                 break;
             }
 
-            Image::create([
+            DB::table('item_images')->insert([
                 'item_id' => $item->id,
                 'path' => $imageUrls[$index],
             ]);

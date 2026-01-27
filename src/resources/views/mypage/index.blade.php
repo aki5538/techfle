@@ -24,7 +24,6 @@
 
 @section('content')
 
-{{-- プロフィールヘッダー --}}
 <div class="container">
     <div class="mypage-header">
         <div class="profile-image-wrapper">
@@ -45,52 +44,47 @@
     </div>
 </div>
 
-    {{-- タブ --}}
-    <div class="mypage-tabs">
-        <a href="{{ route('mypage.index', ['page' => 'sell']) }}"
-           class="mypage-tab {{ $page === 'sell' ? 'is-active' : '' }}">
-            出品した商品
-        </a>
+<div class="mypage-tabs">
+    <a href="{{ route('mypage.index', ['page' => 'sell']) }}"
+       class="mypage-tab {{ $page === 'sell' ? 'is-active' : '' }}">
+        出品した商品
+    </a>
 
-        <a href="{{ route('mypage.index', ['page' => 'buy']) }}"
-           class="mypage-tab {{ $page === 'buy' ? 'is-active' : '' }}">
-            購入した商品
-        </a>
-    </div>
-    <div class="mypage-tab-border"></div>
+    <a href="{{ route('mypage.index', ['page' => 'buy']) }}"
+        class="mypage-tab {{ $page === 'buy' ? 'is-active' : '' }}">
+        購入した商品
+    </a>
+</div>
+<div class="mypage-tab-border"></div>
 
-    {{-- 商品一覧 --}}
-    <div class="mypage-items">
-        @foreach ($items as $item)
-            <a href="{{ url('/items/' . $item->id) }}" class="mypage-item-card">
-                <div class="item-image-wrapper">
+<div class="mypage-items">
+    @foreach ($items as $item)
+        <a href="{{ url('/items/' . $item->id) }}" class="mypage-item-card">
+            <div class="item-image-wrapper">
+                @php
+                    $image = $item->images->first();
+                @endphp
+
+                @if ($image)
                     @php
-                        $image = $item->images->first();
+                        $path = $image->path;
+
+                        if (str_starts_with($path, 'http')) {
+                            $url = $path;
+                        } else {
+                            $url = str_starts_with($path, '/storage/')
+                                ? $path
+                                : '/storage/' . $path;
+                        }
                     @endphp
+                    <img src="{{ $url }}" class="item-image">
+                @else
+                    <div class="item-image-placeholder">No Image</div>
+                @endif
+            </div>
 
-                    @if ($image)
-                        @php
-                            $path = $image->path;
-
-                            if (str_starts_with($path, 'http')) {
-                                // フルURLならそのまま使う
-                                $url = $path;
-                            } else {
-                                // ローカルストレージの場合
-                                $url = str_starts_with($path, '/storage/')
-                                    ? $path
-                                    : '/storage/' . $path;
-                            }
-                        @endphp
-                        <img src="{{ $url }}" class="item-image">
-                    @else
-                        <div class="item-image-placeholder">No Image</div>
-                    @endif
-
-
-                </div>
-                <p class="item-name">{{ $item->name }}</p>
-            </a>
-        @endforeach
-    </div>
+            <p class="item-name">{{ $item->name }}</p>
+        </a>
+    @endforeach
+</div>
 @endsection

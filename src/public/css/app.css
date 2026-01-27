@@ -23,7 +23,7 @@
 @media screen and (min-width: 1400px) and (max-width: 1540px) {
     .auth-header {
         padding: 16px 40px;
-        background-color: #000; /* 黒帯 */
+        background-color: #000;
     }
 
     .auth-header img {
