@@ -79,7 +79,37 @@ STRIPE_KEY=your_stripe_public_key
 STRIPE_SECRET=your_stripe_secret_key
 ```
 
-## テスト実行方法
+## テスト環境のセットアップ
+
+1. .env.testingを作成
+```
+cp .env.example .env.testing
+```
+
+2. .env.testingにテスト用DBを設定
+```
+DB_CONNECTION=mysql
+DB_HOST=mysql
+DB_PORT=3306
+DB_DATABASE=demo_test
+DB_USERNAME=laravel_user
+DB_PASSWORD=laravel_pass
+```
+
+3. テスト用データベースを作成
+```
+docker compose exec mysql bash
+mysql -u root
+CREATE DATABASE demo_test;
+exit;
+```
+
+4. テスト用DBにmigrate＆seed
+```
+docker compose exec php bash
+php artisan migrate --seed --env=testing
+```
+## テスト実行
 ```
 docker compose exec php bash
 php artisan test

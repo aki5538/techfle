@@ -15,36 +15,26 @@ class ItemController extends Controller
     // 商品一覧（トップ画面 & マイリスト）
     public function index(Request $request)
     {
-        $userId = auth()->id();
+        $userId = optional(auth()->user())->id;
+
         $keyword = $request->query('keyword');
         $tab = $request->query('tab');
 
-        //購入済み商品の ID を取得（Sold 判定用）
         $purchasedItemIds = Purchase::pluck('item_id')->toArray();
 
-        //マイリスト（いいねした商品だけ）
         if ($tab === 'mylist' && $userId) {
             $items = Item::with('images')
-                ->whereHas('likes', function ($q) use ($userId) {
-                    $q->where('user_id', $userId);
-                })
-                ->when($keyword, function ($q) use ($keyword) {
-                    $q->where('name', 'like', "%{$keyword}%");
-                })
+                ->whereHas('likes', fn($q) => $q->where('user_id', $userId))
+                ->when($keyword, fn($q) => $q->where('name', 'like', "%{$keyword}%"))
                 ->get();
 
             return view('items.index', compact('items', 'purchasedItemIds', 'keyword', 'tab'));
         }
 
-        //通常の商品一覧（未ログインでも表示OK）
+        // 通常一覧（自分の商品は除外）
         $items = Item::with('images')
-            ->when($userId, function ($q) use ($userId) {
-                $q->where('user_id', '!=', $userId);
-            })
-            ->when($keyword, function ($q) use ($keyword) {
-                //部分一致検索（仕様書 FN016）
-                $q->where('name', 'like', "%{$keyword}%");
-            })
+            ->when($userId, fn($q) => $q->where('user_id', '!=', $userId))
+            ->when($keyword, fn($q) => $q->where('name', 'like', "%{$keyword}%"))
             ->get();
 
         return view('items.index', compact('items', 'purchasedItemIds', 'keyword', 'tab'));
