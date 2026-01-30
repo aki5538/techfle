@@ -14,7 +14,7 @@
         <!-- ユーザ名 -->
         <div class="form-group">
             <label for="name">ユーザ名</label>
-            <input id="name" type="text" name="name" value="{{ old('name') }}" required autofocus>
+            <input id="name" type="text" name="name" value="{{ old('name') }}" autofocus>
             @error('name')
                 <div class="text-danger">{{ $message }}</div>
             @enderror
@@ -33,9 +33,9 @@
         <div class="form-group">
             <label for="password">パスワード</label>
             <input id="password" type="password" name="password">
-            @error('password')
-                <div class="text-danger">{{ $message }}</div>
-            @enderror
+            @if ($errors->has('password') && $errors->first('password') === 'パスワードは8文字以上で入力してください')
+                <div class="text-danger">{{ $errors->first('password') }}</div>
+            @endif
         </div>
 
         <!-- 確認用パスワード -->
@@ -45,6 +45,9 @@
             @error('password_confirmation')
                 <div class="text-danger">{{ $message }}</div>
             @enderror
+            @if ($errors->has('password') && $errors->first('password') === 'パスワードと一致しません')
+                <div class="text-danger">{{ $errors->first('password') }}</div>
+            @endif
         </div>
 
         <!-- 登録ボタン -->
