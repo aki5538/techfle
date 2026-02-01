@@ -116,4 +116,37 @@ class PurchaseTest extends TestCase
 
         $response->assertRedirect(route('items.index'));
     }
+    /** @test */
+    public function 購入画面に必要な情報が表示される()
+    {
+        $user = User::factory()->create();
+
+        // プロフィール住所（初期値）
+        $address = Address::create([
+            'user_id' => $user->id,
+            'postal_code' => '123-4567',
+            'address' => '福岡県福岡市テスト',
+            'building' => 'テストビル',
+        ]);
+
+        // 商品
+        $item = Item::factory()->create([
+            'name' => 'テスト商品',
+            'price' => 5000,
+        ]);
+
+        $this->actingAs($user);
+
+        // 購入画面へアクセス
+        $response = $this->get(route('purchase.create', ['item_id' => $item->id]));
+
+        // 商品名
+        $response->assertSee('テスト商品');
+
+        // 価格（フォーマットに合わせる）
+        $response->assertSee('¥5,000');
+
+        // 住所（初期値）
+        $response->assertSee('福岡県福岡市テスト');
+    }
 }

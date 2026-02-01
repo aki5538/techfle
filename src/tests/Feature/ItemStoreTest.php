@@ -2,8 +2,10 @@
 
 namespace Tests\Feature;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Http\UploadedFile;
 use App\Models\User;
 use App\Models\Category;
 use App\Models\Item;
@@ -30,10 +32,10 @@ class ItemStoreTest extends TestCase
             'price'       => 5000,
             'description' => 'テスト説明文',
             'status'      => 'like-new',
-            'categories'  => ['1', '2'], // sync() に渡される
+            'categories'  => ['1', '2'],
         ]);
 
-        // DB に商品が保存されているか
+        // items テーブル確認
         $this->assertDatabaseHas('items', [
             'user_id'     => $user->id,
             'name'        => 'テスト商品',
@@ -43,9 +45,9 @@ class ItemStoreTest extends TestCase
             'status'      => 'like-new',
         ]);
 
-        // カテゴリの紐づけ確認（item_category 中間テーブル）
         $item = Item::first();
 
+        // 中間テーブル（マイグレーションが create_item_category_table なので item_category）
         $this->assertDatabaseHas('item_category', [
             'item_id'     => $item->id,
             'category_id' => 1,
@@ -56,7 +58,6 @@ class ItemStoreTest extends TestCase
             'category_id' => 2,
         ]);
 
-        // リダイレクト先の確認
         $response->assertRedirect(route('items.show', ['item_id' => $item->id]));
     }
 }

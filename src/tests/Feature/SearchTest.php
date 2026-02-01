@@ -38,4 +38,11 @@ class SearchTest extends TestCase
 
         $response->assertSee($keyword);
     }
+    /** @test */
+    public function 検索欄がヘッダーに存在する()
+    {
+        $response = $this->get('/');
+
+        $response->assertSee('なにをお探しですか？');
+    }
 }

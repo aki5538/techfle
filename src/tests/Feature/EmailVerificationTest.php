@@ -3,9 +3,7 @@
 namespace Tests\Feature;
 
 use App\Models\User;
-use Illuminate\Auth\Events\Registered;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Auth\Notifications\VerifyEmail;
 use Illuminate\Support\Facades\URL;
@@ -30,10 +28,8 @@ class EmailVerificationTest extends TestCase
 
         $user = User::first();
 
-        // 認証メールが送信されたことを確認
         Notification::assertSentTo($user, VerifyEmail::class);
 
-        // 誘導画面へリダイレクト
         $response->assertRedirect(route('verification.notice'));
     }
 
@@ -44,20 +40,20 @@ class EmailVerificationTest extends TestCase
 
         $this->actingAs($user);
 
-        // 誘導画面を表示
         $response = $this->get(route('verification.notice'));
         $response->assertStatus(200);
 
-        // 誘導画面の「認証はこちらから」リンクを再現
-        $verifyUrl = URL::signedRoute('verification.verify', [
-            'id' => $user->id,
-            'hash' => sha1($user->email),
-        ]);
+        $verifyUrl = URL::temporarySignedRoute(
+            'verification.verify',
+            now()->addMinutes(60),
+            [
+                'id' => $user->id,
+                'hash' => sha1($user->email),
+            ]
+        );
 
-        // 認証リンクへアクセス
         $response = $this->get($verifyUrl);
 
-        // 認証完了後はプロフィール設定画面へ遷移
         $response->assertRedirect('/mypage/profile');
     }
 
@@ -70,13 +66,10 @@ class EmailVerificationTest extends TestCase
 
         $this->actingAs($user);
 
-        // 再送リクエスト
         $response = $this->post(route('verification.send'));
 
-        // メールが再送されていること
         Notification::assertSentTo($user, VerifyEmail::class);
 
-        // 元の画面に戻る
         $response->assertStatus(302);
     }
 }
